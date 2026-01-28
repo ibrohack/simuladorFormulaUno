@@ -1,7 +1,7 @@
 package clases;
 
 public class Coche {
-	private String Codiogo;
+	private String codigo;
 	private TipoRueda tipoRueda;
 	private float desgaste;
 	private float litrosGasolina;
@@ -9,9 +9,9 @@ public class Coche {
 	private float probChoque;
 	private int vueltasParaPit;
 		
-	public Coche(String codiogo, TipoRueda tipoRueda, float desgaste, float litrosGasolina, float velocidadMax, float probChoque, int vueltasParaPit) {
+	public Coche(String codigo, TipoRueda tipoRueda, float desgaste, float litrosGasolina, float velocidadMax, float probChoque, int vueltasParaPit) {
 		super();
-		Codiogo = codiogo;
+		this.codigo = codigo;
 		this.tipoRueda = tipoRueda;
 		this.desgaste = desgaste;
 		this.litrosGasolina = litrosGasolina;
@@ -25,11 +25,11 @@ public class Coche {
 	}
 
 	public final String getCodiogo() {
-		return Codiogo;
+		return codigo;
 	}
 	
 	public final void setCodiogo(String codiogo) {
-		Codiogo = codiogo;
+		codigo = codiogo;
 	}
 	
 	public final TipoRueda getTipoRueda() {
@@ -83,7 +83,7 @@ public class Coche {
 
 	@Override
 	public String toString() {
-		return "Coche [Codiogo=" + Codiogo + ", tipoRueda=" + tipoRueda + ", desgaste=" + desgaste + ", litrosGasolina="
+		return "Coche [Codiogo=" + codigo + ", tipoRueda=" + tipoRueda + ", desgaste=" + desgaste + ", litrosGasolina="
 				+ litrosGasolina + ", velocidadMax=" + velocidadMax + ", probChoque=" + probChoque + ", vueltasParaPit="
 				+ vueltasParaPit + "]";
 	}
