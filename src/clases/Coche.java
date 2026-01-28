@@ -1,6 +1,10 @@
 package clases;
 
-public class Coche {
+import java.io.Serializable;
+
+public class Coche implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private String codigo;
 	private TipoRueda tipoRueda;
 	private float desgaste;
