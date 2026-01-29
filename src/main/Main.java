@@ -1,6 +1,10 @@
 package main;
 
-import utilidades.Utilidades;
+import utilidades.*;
+
+import java.io.File;
+
+import metodos.*;
 
 public class Main {
 
@@ -15,6 +19,7 @@ public class Main {
 	}
 	
 	public static void main(String[] args) {
+		File fichCircuitos = new File("circuitos.dat");
 		int opcion=0;
 		
 		do {
@@ -25,6 +30,7 @@ public class Main {
 			case 2:
 				break;
 			case 3:
+				GestionCircuitos.menuCircuitos(fichCircuitos);
 				break;
 			case 4:
 				break;

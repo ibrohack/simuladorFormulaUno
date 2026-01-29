@@ -6,10 +6,10 @@ public class Circuito {
 	private int numeroVuletas;
 	private int longitudCircuito;
 	
-	public Circuito(String codigoCircuito, String nombreCircuito, int numeroVuletas, int longitudCircuito) {
+	public Circuito(String nombreCircuito, int numeroVuletas, int longitudCircuito) {
 		super();
-		this.codigoCircuito = codigoCircuito;
 		this.nombreCircuito = nombreCircuito;
+		this.codigoCircuito = nombreCircuito.substring(0,3);
 		this.numeroVuletas = numeroVuletas;
 		this.longitudCircuito = longitudCircuito;
 	}
@@ -51,5 +51,4 @@ public class Circuito {
 		return "Circuito [codigoCircuito=" + codigoCircuito + ", nombreCircuito=" + nombreCircuito + ", numeroVuletas="
 				+ numeroVuletas + ", longitudCircuito=" + longitudCircuito + "]";
 	}
-	
 }
