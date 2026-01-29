@@ -2,10 +2,9 @@ package clases;
 
 import java.io.Serializable;
 
-public class Coche implements Serializable {
+public class PlanDeCarrera implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String codigo;
 	private TipoRueda tipoRueda;
 	private float desgaste;
 	private float litrosGasolina;
@@ -13,9 +12,9 @@ public class Coche implements Serializable {
 	private float probChoque;
 	private int vueltasParaPit;
 		
-	public Coche(String codigo, TipoRueda tipoRueda, float desgaste, float litrosGasolina, float velocidadMax, float probChoque, int vueltasParaPit) {
+	public PlanDeCarrera( TipoRueda tipoRueda, float desgaste, float litrosGasolina, float velocidadMax, float probChoque, int vueltasParaPit) {
 		super();
-		this.codigo = codigo;
+		
 		this.tipoRueda = tipoRueda;
 		this.desgaste = desgaste;
 		this.litrosGasolina = litrosGasolina;
@@ -24,16 +23,8 @@ public class Coche implements Serializable {
 		this.vueltasParaPit = vueltasParaPit;
 	}
 	
-	public Coche() {
+	public PlanDeCarrera() {
 		super();
-	}
-
-	public final String getCodiogo() {
-		return codigo;
-	}
-	
-	public final void setCodiogo(String codiogo) {
-		codigo = codiogo;
 	}
 	
 	public final TipoRueda getTipoRueda() {
@@ -87,7 +78,7 @@ public class Coche implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Coche [Codiogo=" + codigo + ", tipoRueda=" + tipoRueda + ", desgaste=" + desgaste + ", litrosGasolina="
+		return "Coche [tipoRueda=" + tipoRueda + ", desgaste=" + desgaste + ", litrosGasolina="
 				+ litrosGasolina + ", velocidadMax=" + velocidadMax + ", probChoque=" + probChoque + ", vueltasParaPit="
 				+ vueltasParaPit + "]";
 	}
