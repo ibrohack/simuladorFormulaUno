@@ -7,6 +7,7 @@ public class Piloto {
 	private String codigoPiloto;
 	private String nombre;
 	private TreeMap<String, LocalTime>tiempos;
+	
 	public final String getCodigoPiloto() {
 		return codigoPiloto;
 	}
