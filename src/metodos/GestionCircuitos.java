@@ -19,7 +19,9 @@ public class GestionCircuitos {
 		int opciones;
 		
 		//LEEMOS TODOS LOS DATOS QUE TENGAMOS EN EL FICHERO
-		leerCircuitos(fichCircuitos, aCircuitos);
+		if(fichCircuitos.exists()) {
+			leerCircuitos(fichCircuitos, aCircuitos);
+		}
 		
 		do {
 			System.out.println("\n===== Gestión de Circuitos ====="
@@ -99,7 +101,7 @@ public class GestionCircuitos {
 	LE MANTENEMOS EN EL BUCLE HASTA QUE EL USUARIO LO DECIDA
 	*/
 	public static void anadirCircuitos(ArrayList<Circuito> aCircuitos) {
-		String nombre, continuar;
+		String nombre, codigo, continuar;
 		int numeroVueltas, longitud;
 		
 		do {
@@ -110,12 +112,13 @@ public class GestionCircuitos {
 				nombre = Utilidades.introducirCadena();
 			}
 			if(!buscarNombre(aCircuitos, nombre)) {
+				codigo = crearCodigo(aCircuitos);
 				System.out.println("Introduce el número de vueltas del circuito: ");
 				numeroVueltas = Utilidades.leerInt(1,Integer.MAX_VALUE);
 				System.out.println("Introduce la longitud del circuito: ");
 				longitud = Utilidades.leerInt(1,Integer.MAX_VALUE);
 				
-				Circuito c = new Circuito(nombre, numeroVueltas, longitud);
+				Circuito c = new Circuito(codigo, nombre, numeroVueltas, longitud);
 				aCircuitos.add(c);
 				System.out.println("Circuito añadido correctamente.");
 			}else {
@@ -126,12 +129,37 @@ public class GestionCircuitos {
 		}while(continuar.equalsIgnoreCase("SI"));
 	}
 	
+	public static String crearCodigo(ArrayList<Circuito> aCircuitos) {
+		String codigo = "001";
+		int nuevoCod = 0;
+		boolean fin = false;
+		
+		//COMPARAMOS EL CODIGO ACTUAL CON EL QUE SE SUPONE QUE DEBERIA SER
+		//EN CASO DE QUE SEA DISTINTO TERMINAMOS LA EJECUCION Y LO GUARDAMOS
+		if(!aCircuitos.isEmpty()) {
+			for(int i=0; i < aCircuitos.size() && !fin; i++) {
+				if(Integer.parseInt(aCircuitos.get(i).getCodigoCircuito().substring(4)) != Integer.parseInt(codigo)) {
+					fin = true;
+				}
+				nuevoCod = Integer.parseInt(aCircuitos.get(i).getCodigoCircuito().substring(4))+1;
+			}
+			
+			//PARA QUE EL CODIGO CONTENGA 3 DIGITOS TENEMOS EN CUENTA LA LO LONGITUD DEL MISMO
+			if(String.valueOf(nuevoCod).length()==1) {
+				codigo = "00" + String.valueOf(nuevoCod);
+			}else if(String.valueOf(nuevoCod).length()==2) {
+				codigo = "0" + String.valueOf(nuevoCod);
+			}
+		}
+		return codigo;
+	}
+	
 	public static boolean buscarNombre(ArrayList<Circuito> aCircuitos, String nombre) {
 		boolean existe=false;
 		
 		for(int i=0; i < aCircuitos.size() && !existe; i++) {
 			if(aCircuitos.get(i).getNombreCircuito().equalsIgnoreCase(nombre)) {
-				existe=true;
+				existe = true;
 			}
 		}
 		return existe;
@@ -146,8 +174,12 @@ public class GestionCircuitos {
 	}
 
 	public static void mostrarCircuitos(ArrayList<Circuito> aCircuitos) {
-		for(Circuito c : aCircuitos) {
-			System.out.println("\n" + c);
+		if(!aCircuitos.isEmpty()) {
+			for(Circuito c : aCircuitos) {
+				System.out.println("\n" + c);
+			}
+		}else {
+			System.out.println("No hay circuitos registrados.");
 		}
 	}
 }

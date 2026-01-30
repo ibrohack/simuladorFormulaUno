@@ -4,12 +4,12 @@ public class Circuito {
 	private String codigoCircuito;
 	private String nombreCircuito;
 	private int numeroVuletas;
-	private int longitudCircuito;
+	private float longitudCircuito;
 	
-	public Circuito(String nombreCircuito, int numeroVuletas, int longitudCircuito) {
+	public Circuito(String codigoCircuito, String nombreCircuito, int numeroVuletas, float longitudCircuito) {
 		super();
 		this.nombreCircuito = nombreCircuito;
-		this.codigoCircuito = nombreCircuito.substring(0,3);
+		this.codigoCircuito = nombreCircuito.toUpperCase().substring(0,3) + "-" + codigoCircuito;
 		this.numeroVuletas = numeroVuletas;
 		this.longitudCircuito = longitudCircuito;
 	}
@@ -38,11 +38,11 @@ public class Circuito {
 		this.numeroVuletas = numeroVuletas;
 	}
 
-	public int getLongitudCircuito() {
+	public float getLongitudCircuito() {
 		return longitudCircuito;
 	}
 
-	public void setLongitudCircuito(int longitudCircuito) {
+	public void setLongitudCircuito(float longitudCircuito) {
 		this.longitudCircuito = longitudCircuito;
 	}
 
