@@ -1,6 +1,12 @@
 package clases;
 
-public class Circuito {
+import java.io.Serializable;
+
+public class Circuito implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String codigoCircuito;
 	private String nombreCircuito;
 	private int numeroVuletas;

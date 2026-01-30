@@ -101,24 +101,24 @@ public class GestionCircuitos {
 	LE MANTENEMOS EN EL BUCLE HASTA QUE EL USUARIO LO DECIDA
 	*/
 	public static void anadirCircuitos(ArrayList<Circuito> aCircuitos) {
-		String nombre, codigo, continuar;
+		String nombreCarrera, codigo, continuar;
 		int numeroVueltas, longitud;
 		
 		do {
 			System.out.println("Introduce el nombre del circuito: ");
-			nombre=Utilidades.introducirCadena();
-			while(nombre.length() < 3) {
+			nombreCarrera=Utilidades.introducirCadena();
+			while(nombreCarrera.length() < 3) {
 				System.out.println("El nombre del circuito debe contener mínimo 3 carácteres. Introduce otro nombre.");
-				nombre = Utilidades.introducirCadena();
+				nombreCarrera = Utilidades.introducirCadena();
 			}
-			if(!buscarNombre(aCircuitos, nombre)) {
+			if(buscarNombre(aCircuitos, nombreCarrera) == -1) {
 				codigo = crearCodigo(aCircuitos);
 				System.out.println("Introduce el número de vueltas del circuito: ");
 				numeroVueltas = Utilidades.leerInt(1,Integer.MAX_VALUE);
 				System.out.println("Introduce la longitud del circuito: ");
 				longitud = Utilidades.leerInt(1,Integer.MAX_VALUE);
 				
-				Circuito c = new Circuito(codigo, nombre, numeroVueltas, longitud);
+				Circuito c = new Circuito(codigo, nombreCarrera, numeroVueltas, longitud);
 				aCircuitos.add(c);
 				System.out.println("Circuito añadido correctamente.");
 			}else {
@@ -154,15 +154,15 @@ public class GestionCircuitos {
 		return codigo;
 	}
 	
-	public static boolean buscarNombre(ArrayList<Circuito> aCircuitos, String nombre) {
-		boolean existe=false;
+	public static int buscarNombre(ArrayList<Circuito> aCircuitos, String nombre) {
+		int posicion=-1;
 		
-		for(int i=0; i < aCircuitos.size() && !existe; i++) {
+		for(int i=0; i < aCircuitos.size() && posicion == -1; i++) {
 			if(aCircuitos.get(i).getNombreCircuito().equalsIgnoreCase(nombre)) {
-				existe = true;
+				posicion = i;
 			}
 		}
-		return existe;
+		return posicion;
 	}
 	
 	public static void modificarCircuitos(ArrayList<Circuito> aCircuitos) {
@@ -170,6 +170,18 @@ public class GestionCircuitos {
 	}
 	
 	public static void eliminarCircuitos(ArrayList<Circuito> aCircuitos) {
+		String nombreCarrera;
+		int posicion;
+		
+		System.out.println("Introduce el nombre del circuito");
+		nombreCarrera = Utilidades.introducirCadena();
+		posicion = buscarNombre(aCircuitos, nombreCarrera);
+		if(posicion != -1) {
+			aCircuitos.remove(posicion);
+			System.out.println("Circuito eliminado correctamente.");
+		}else {
+			System.out.println("El nombre de circuito no esta registrada.");
+		}
 		
 	}
 
