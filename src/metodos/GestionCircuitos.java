@@ -102,7 +102,7 @@ public class GestionCircuitos {
 	*/
 	public static void anadirCircuitos(ArrayList<Circuito> aCircuitos) {
 		String nombreCarrera, codigo, continuar;
-		int numeroVueltas, longitud;
+		int numeroVueltas, longitud, posicion;
 		
 		do {
 			System.out.println("Introduce el nombre del circuito: ");
@@ -119,7 +119,7 @@ public class GestionCircuitos {
 				longitud = Utilidades.leerInt(1,Integer.MAX_VALUE);
 				
 				Circuito c = new Circuito(codigo, nombreCarrera, numeroVueltas, longitud);
-				aCircuitos.add(c);
+				aCircuitos.add(Integer.parseInt(c.getCodigoCircuito().substring(4))-1,c);
 				System.out.println("Circuito añadido correctamente.");
 			}else {
 				System.out.println("El nombre del circuito ya existe.");
@@ -131,17 +131,19 @@ public class GestionCircuitos {
 	
 	public static String crearCodigo(ArrayList<Circuito> aCircuitos) {
 		String codigo = "001";
-		int nuevoCod = 0;
+		int nuevoCod = 1;
 		boolean fin = false;
 		
 		//COMPARAMOS EL CODIGO ACTUAL CON EL QUE SE SUPONE QUE DEBERIA SER
 		//EN CASO DE QUE SEA DISTINTO TERMINAMOS LA EJECUCION Y LO GUARDAMOS
 		if(!aCircuitos.isEmpty()) {
 			for(int i=0; i < aCircuitos.size() && !fin; i++) {
-				if(Integer.parseInt(aCircuitos.get(i).getCodigoCircuito().substring(4)) != Integer.parseInt(codigo)) {
+				if(Integer.parseInt(aCircuitos.get(i).getCodigoCircuito().substring(4)) != nuevoCod) {
 					fin = true;
 				}
-				nuevoCod = Integer.parseInt(aCircuitos.get(i).getCodigoCircuito().substring(4))+1;
+				if(!fin) {
+					nuevoCod = Integer.parseInt(aCircuitos.get(i).getCodigoCircuito().substring(4))+1;
+				}
 			}
 			
 			//PARA QUE EL CODIGO CONTENGA 3 DIGITOS TENEMOS EN CUENTA LA LO LONGITUD DEL MISMO
