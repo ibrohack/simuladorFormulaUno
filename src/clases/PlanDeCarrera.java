@@ -34,6 +34,9 @@ public class PlanDeCarrera implements Serializable {
 
 	public PlanDeCarrera() {
 		super();
+		litrosGasolina=0;
+		desgaste = 0;
+		probChoque = 0;
 	}
 	
 	
