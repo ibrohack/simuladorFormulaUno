@@ -55,40 +55,40 @@ public class GestionPlanDeCarrera {
 		planDeCarrera.setDesgaste(desgaste);
 	}
 
-	public void velozidadMaxima(PlanDeCarrera planDeCarrera) {
-		float v=0;
+	public void velocidadMaxima(PlanDeCarrera planDeCarrera) {
+		float velocidad=0;
 		if(planDeCarrera.getTipoDeConducion().toString().equalsIgnoreCase("agresivo")) {
 			if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("blando")) {
-				v = (float) (320-(320*0.05)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (320-(320*0.05)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("medio")) {
-				v = (float) (320-(320*0.03)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (320-(320*0.03)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("duro")) {
-				v = (float) (320-(320*0.02)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (320-(320*0.02)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}else {
-				v = (float) (320-(320*0.0089)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (320-(320*0.0089)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}
 		}else if(planDeCarrera.getTipoDeConducion().toString().equalsIgnoreCase("Normal")){
 			if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("blando")) {
-				v = (float) (300-(300*0.05)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (300-(300*0.05)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("medio")) {
-				v = (float) (300-(300*0.03)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (300-(300*0.03)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("duro")) {
-				v = (float) (300-(300*0.02)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (300-(300*0.02)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}else {
-				v = (float) (300-(300*0.0089)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (300-(300*0.0089)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}
 		}else {
 			if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("blando")) {
-				v = (float) (280-(280*0.05)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (280-(280*0.05)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("medio")) {
-				v = (float) (280-(280*0.03)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (280-(280*0.03)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("duro")) {
-				v = (float) (280-(280*0.0213)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (280-(280*0.0213)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}else {
-				v = (float) (280-(280*0.00895)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				velocidad = (float) (280-(280*0.00895)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}
 		}
-		planDeCarrera.setVelocidadMax(v);
+		planDeCarrera.setVelocidadMax(velocidad);
 	}
 
 	public void consumoDeGasolina(PlanDeCarrera planDeCarrera) {
