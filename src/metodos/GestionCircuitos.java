@@ -21,6 +21,7 @@ public class GestionCircuitos {
 		//LEEMOS TODOS LOS DATOS QUE TENGAMOS EN EL FICHERO
 		if(fichCircuitos.exists()) {
 			leerCircuitos(fichCircuitos, aCircuitos);
+			System.out.println("");
 		}
 		
 		do {

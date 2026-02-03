@@ -26,7 +26,8 @@ public class Main {
 			switch(opcion) {
 			case 1:
 				break;
-			case 2:GestionCircuitos.menuCircuitos(fichCircuitos);
+			case 2:
+				GestionCircuitos.menuCircuitos(fichCircuitos);
 				break;
 			case 3:
 				break;
