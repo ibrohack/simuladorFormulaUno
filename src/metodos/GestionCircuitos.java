@@ -102,7 +102,7 @@ public class GestionCircuitos {
 	*/
 	public static void anadirCircuitos(ArrayList<Circuito> aCircuitos) {
 		String nombreCarrera, codigo, continuar;
-		int numeroVueltas, longitud, posicion;
+		int numeroVueltas, longitud;
 		
 		do {
 			System.out.println("Introduce el nombre del circuito: ");
@@ -167,8 +167,42 @@ public class GestionCircuitos {
 		return posicion;
 	}
 	
+	/*
+	SE LE PIDE AL USUARIO EL NOMBRE DE UN CIRCUITO, EN CASO DE EXISTIR NO SUCEDE NADA
+	AL COINCIDIR SE LE PEDIRÁ UN NUEVO NOMBRE (CON LAS RESTRICCIONES DE LONGITUD Y QUE NO EXISTA), EL NUMERO DE VUELTAS Y LA LONGITUD
+	SE MODIFICARÁ AUTOMATICAMENTE EL CODIGO PARA QUE CONCUERDE CON EL NUEVO NOMBRE DEL CIRCUITO
+	*/
 	public static void modificarCircuitos(ArrayList<Circuito> aCircuitos) {
+		String nombreCarrera, nNombre="";
+		int posicion;
+		boolean correcto=false;
 		
+		System.out.println("Introduce el nombre del circuito");
+		nombreCarrera = Utilidades.introducirCadena();
+		posicion = buscarNombre(aCircuitos, nombreCarrera);
+		if(posicion != -1) {
+			System.out.println("Introduce el nuevo nombre." + " (Nombre actual: " + aCircuitos.get(posicion).getNombreCircuito() + ")");
+			while(!correcto) {
+				correcto=true;
+				nNombre=Utilidades.introducirCadena();
+				if(nNombre.length() < 3) {
+					System.out.println("El nombre del circuito debe contener mínimo 3 carácteres. Introduce otro nombre.");
+					correcto=false;
+				}else if(buscarNombre(aCircuitos, nNombre) != -1) {
+					System.out.println("El nombre del circuito ya está registrado. Introduce otro nombre.");
+					correcto=false;
+				}
+			}
+			aCircuitos.get(posicion).setNombreCircuito(nNombre);
+			aCircuitos.get(posicion).setCodigoCircuito(nNombre.substring(0,3).toUpperCase() + "-" + aCircuitos.get(posicion).getCodigoCircuito().substring(4));
+			System.out.println("Introduce el nuevo nombre." + " (Nº de vueltas actuales: " + aCircuitos.get(posicion).getNumeroVuletas() + ")");
+			aCircuitos.get(posicion).setNumeroVuletas(Utilidades.leerInt(0,Integer.MAX_VALUE));
+			System.out.println("Introduce el nuevo nombre." + " (Longitud actual: " + aCircuitos.get(posicion).getLongitudCircuito() + ")");
+			aCircuitos.get(posicion).setLongitudCircuito(Utilidades.leerInt(0,Integer.MAX_VALUE));
+			System.out.println("Cambios realizados correctamente.");
+		}else {
+			System.out.println("El nombre de circuito no esta registrada.");
+		}
 	}
 	
 	public static void eliminarCircuitos(ArrayList<Circuito> aCircuitos) {

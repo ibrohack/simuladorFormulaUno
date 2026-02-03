@@ -9,14 +9,14 @@ public class Circuito implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String codigoCircuito;
 	private String nombreCircuito;
-	private int numeroVuletas;
+	private int numeroVueltas;
 	private float longitudCircuito;
 	
 	public Circuito(String codigoCircuito, String nombreCircuito, int numeroVuletas, float longitudCircuito) {
 		super();
 		this.nombreCircuito = nombreCircuito;
 		this.codigoCircuito = nombreCircuito.toUpperCase().substring(0,3) + "-" + codigoCircuito;
-		this.numeroVuletas = numeroVuletas;
+		this.numeroVueltas = numeroVuletas;
 		this.longitudCircuito = longitudCircuito;
 	}
 
@@ -37,11 +37,11 @@ public class Circuito implements Serializable{
 	}
 
 	public int getNumeroVuletas() {
-		return numeroVuletas;
+		return numeroVueltas;
 	}
 
 	public void setNumeroVuletas(int numeroVuletas) {
-		this.numeroVuletas = numeroVuletas;
+		this.numeroVueltas = numeroVuletas;
 	}
 
 	public float getLongitudCircuito() {
@@ -55,6 +55,6 @@ public class Circuito implements Serializable{
 	@Override
 	public String toString() {
 		return "Circuito [codigoCircuito=" + codigoCircuito + ", nombreCircuito=" + nombreCircuito + ", numeroVuletas="
-				+ numeroVuletas + ", longitudCircuito=" + longitudCircuito + "]";
+				+ numeroVueltas + ", longitudCircuito=" + longitudCircuito + "]";
 	}
 }
