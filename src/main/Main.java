@@ -11,11 +11,10 @@ public class Main {
 	public static int menu() {
 		System.out.println("\n===== MENU ====="
 						 + "\n1.- Gestionar Pilotos"
-						 + "\n2.- Gestionar Coches"
-						 + "\n3.- Gestionar Circuitos"
-						 + "\n4.- Iniciar Carrera"
-						 + "\n5.- Salir");
-		return Utilidades.leerInt(1,5);
+						 + "\n2.- Gestionar Circuitos"
+						 + "\n3.- Iniciar Carrera"
+						 + "\n0.- Salir");
+		return Utilidades.leerInt(0,3);
 	}
 	
 	public static void main(String[] args) {
@@ -27,17 +26,14 @@ public class Main {
 			switch(opcion) {
 			case 1:
 				break;
-			case 2:
+			case 2:GestionCircuitos.menuCircuitos(fichCircuitos);
 				break;
 			case 3:
-				GestionCircuitos.menuCircuitos(fichCircuitos);
 				break;
-			case 4:
-				break;
-			case 5:
+			case 0:
 				System.out.println("Saliendo...");
 				break;
 			}
-		}while(opcion!=5);
+		}while(opcion!=0);
 	}
 }
