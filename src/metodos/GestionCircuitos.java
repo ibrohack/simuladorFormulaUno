@@ -29,8 +29,8 @@ public class GestionCircuitos {
 							 + "\n2.- Modificar circuitos."
 							 + "\n3.- Eliminar circuitos."
 							 + "\n4.- Mostrar circuitos."
-							 + "\n5.- Salir.");
-			opciones = Utilidades.leerInt(1, 5);
+							 + "\n0.- Salir.");
+			opciones = Utilidades.leerInt(0, 4);
 			switch(opciones) {
 			case 1:
 				anadirCircuitos(aCircuitos);
@@ -44,13 +44,13 @@ public class GestionCircuitos {
 			case 4:
 				mostrarCircuitos(aCircuitos);
 				break;
-			case 5:
+			case 0:
 				//GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
 				guardarCircuitos(fichCircuitos, aCircuitos);
 				System.out.println("Volviendo al Menu Principal...");
 				break;
 			}
-		}while(opciones != 5);
+		}while(opciones != 0);
 	}
 	
 	//ESCRITURA DE DATOS DEL FICHERO EN UN ARRAYLIST
