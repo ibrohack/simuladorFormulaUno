@@ -83,7 +83,7 @@ public class GestionPlanDeCarrera {
 			}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("medio")) {
 				v = (float) (280-(280*0.03)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("duro")) {
-				v = (float) (280-(280*0.02)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
+				v = (float) (280-(280*0.0213)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}else {
 				v = (float) (280-(280*0.0089)-(768+planDeCarrera.getLitrosGasolina())*0.00981);
 			}
