@@ -23,13 +23,7 @@ public class GestionCircuitos {
 		}
 		
 		do {
-			System.out.println("\n===== Gestión de Circuitos ====="
-							 + "\n1.- Añadir circuitos."
-							 + "\n2.- Modificar circuitos."
-							 + "\n3.- Eliminar circuitos."
-							 + "\n4.- Mostrar circuitos."
-							 + "\n0.- Salir.");
-			opciones = Utilidades.leerInt(0, 4);
+			opciones = menu();
 			switch(opciones) {
 			case 1:
 				anadirCircuitos(aCircuitos);
@@ -52,7 +46,15 @@ public class GestionCircuitos {
 		}while(opciones != 0);
 	}
 	
-	
+	public static int menu() {
+		System.out.println("\n===== Gestión de Circuitos ====="
+				 + "\n1.- Añadir circuitos."
+				 + "\n2.- Modificar circuitos."
+				 + "\n3.- Eliminar circuitos."
+				 + "\n4.- Mostrar circuitos."
+				 + "\n0.- Salir.");
+		return Utilidades.leerInt(0, 4);
+	}
 	
 	//ESCRITURA DE DATOS DEL FICHERO EN UN ARRAYLIST
 	//SE DEVUELVE EL ARRAYLIST PORQUE SINO PIERDE LA REFERENCIA SEL MISMO
@@ -215,7 +217,6 @@ public class GestionCircuitos {
 		}else {
 			System.out.println("El nombre de circuito no esta registrada.");
 		}
-		
 	}
 
 	public static void mostrarCircuitos(ArrayList<Circuito> aCircuitos) {

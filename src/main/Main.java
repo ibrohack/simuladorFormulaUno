@@ -10,7 +10,7 @@ public class Main {
 
 	public static int menu() {
 		System.out.println("\n===== MENU ====="
-						 + "\n1.- Gestionar Pilotos"
+						 + "\n1.- Gestionar Escuderia"
 						 + "\n2.- Gestionar Circuitos"
 						 + "\n3.- Iniciar Carrera"
 						 + "\n0.- Salir");
@@ -19,6 +19,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		File fichCircuitos = new File("circuitos.dat");
+		File fichEscuderia = new File("escuderia.dat");
 		File fichPilotos = new File("pilotos.dat");
 		int opcion=0;
 		
@@ -26,12 +27,13 @@ public class Main {
 			opcion=menu();
 			switch(opcion) {
 			case 1:
+				GestionEscuderia.menuEscuderia(fichEscuderia);
 				break;
 			case 2:
 				GestionCircuitos.menuCircuitos(fichCircuitos);
 				break;
 			case 3:
-				GestionCarrera.simulacionCarrera(fichCircuitos, fichPilotos);;
+				GestionCarrera.simulacionCarrera(fichCircuitos, fichPilotos);
 				break;
 			case 0:
 				System.out.println("Saliendo...");
