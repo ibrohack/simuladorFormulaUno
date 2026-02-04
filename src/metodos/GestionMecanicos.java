@@ -17,7 +17,7 @@ public class GestionMecanicos {
     private static Map<String, Mecanico> mecanicos = new HashMap<>();
     private static final String RUTA_FICHERO = "C:\\mecanicos.dat";
 
-    public void GestionarMecanicos() {
+    public static void GestionarMecanicos() {
         cargarDatos();
 
         int opcion;
