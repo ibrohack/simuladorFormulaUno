@@ -2,11 +2,11 @@ package clases;
 
 import java.util.TreeMap;
 
-public class Mecanico extends Persona{
+public class Mecanico extends Persona {
 	private double factorRepostaje;
 	private double factorCambioNeumaticos;
-	private TreeMap<String, Integer>puntos;
-	
+	private TreeMap<String, Integer> puntos;
+
 	public Mecanico(String codigo, String nombre, String escuderia, double factorRepostaje,
 			double factorCambioNeumaticos, TreeMap<String, Integer> puntos) {
 		super(codigo, nombre);
@@ -14,7 +14,6 @@ public class Mecanico extends Persona{
 		this.factorCambioNeumaticos = factorCambioNeumaticos;
 		this.puntos = puntos;
 	}
-
 
 	public double getFactorRepostaje() {
 		return factorRepostaje;

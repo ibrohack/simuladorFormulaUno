@@ -17,19 +17,19 @@ public class GestionPilotos {
 	private static Map<String, Piloto> pilotos = new HashMap<>();
 	private static final String RUTA_FICHERO = "C:\\pilotos.dat";
 
-	public void GestionPilotos() {
+	public void GestionarPilotos() {
 		cargarDatos();
 
 		int opcion;
 		do {
 			mostrarMenu();
-			opcion = Utilidades.leerInt("Seleccione una opción: ", 1, 4);
+			opcion = Utilidades.leerInt("Seleccione una opción: ", 0, 3);
 			switch (opcion) {
 			case 1:
-
+				introducirPiloto();
 				break;
 			case 2:
-
+				
 				break;
 			case 3:
 
@@ -52,7 +52,30 @@ public class GestionPilotos {
 
 		System.out.println("0. Salir");
 	}
+	
+	private static void introducirPiloto() {
+        char continuar;
+        do {
+            System.out.println("\n--- ALTA DE PILOTO ---");
+            System.out.println("Introduce el Codigo de piloto:");
+            String codigo = Utilidades.introducirCadena();
 
+            if (pilotos.containsKey(codigo)) {
+                System.out.println("Error: El piloto con Codigo " + codigo + " ya existe.");
+                System.out.println(pilotos.get(codigo));
+            } else {
+                System.out.println("Introduce el Nombre del Piloto:");
+                String nombre = Utilidades.introducirCadena();
+
+                Piloto nuevoPiloto = new Piloto(codigo, nombre);
+
+                pilotos.put(codigo, nuevoPiloto);
+            }
+
+            System.out.println("¿Desea introducir otro piloto? (S/N):");
+            continuar = Utilidades.leerChar('S', 'N');
+        } while (continuar == 'S');
+    }
 	@SuppressWarnings("unchecked")
 	private static void cargarDatos() {
 		File archivo = new File(RUTA_FICHERO);
