@@ -1,6 +1,5 @@
 package metodos;
 
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -20,8 +19,7 @@ public class GestionCircuitos {
 		
 		//LEEMOS TODOS LOS DATOS QUE TENGAMOS EN EL FICHERO
 		if(fichCircuitos.exists()) {
-			leerCircuitos(fichCircuitos, aCircuitos);
-			System.out.println("");
+			aCircuitos=leerCircuitos(fichCircuitos, aCircuitos);		
 		}
 		
 		do {
@@ -54,20 +52,19 @@ public class GestionCircuitos {
 		}while(opciones != 0);
 	}
 	
+	
+	
 	//ESCRITURA DE DATOS DEL FICHERO EN UN ARRAYLIST
-	public static void leerCircuitos(File fichCircuitos, ArrayList<Circuito> aCircuitos) {
+	//SE DEVUELVE EL ARRAYLIST PORQUE SINO PIERDE LA REFERENCIA SEL MISMO
+	@SuppressWarnings("unchecked")
+	public static ArrayList<Circuito> leerCircuitos(File fichCircuitos, ArrayList<Circuito> aCircuitos) {
 		ObjectInputStream ois=null;
-		boolean finArchivo=false;
 		
 		try {
 			ois=new ObjectInputStream(new FileInputStream(fichCircuitos));
-			while(!finArchivo) {
-				try {
-					Circuito c = (Circuito) ois.readObject();
-					aCircuitos.add(c);
-				}catch(EOFException e) {
-					finArchivo=true;
-				}
+			Object obj = ois.readObject();
+			if(obj instanceof ArrayList) {
+				aCircuitos=(ArrayList<Circuito>) obj;
 			}
 			ois.close();
 		} catch (FileNotFoundException e) {
@@ -77,6 +74,7 @@ public class GestionCircuitos {
 	    } catch (IOException e) {
 	        System.out.println("Error leyendo el fichero.");
 	    }
+		return aCircuitos;
 	}
 	
 	//ESCRITURA DE DATOS DEL ARRAYLIST EN UN FICHERO
@@ -84,9 +82,7 @@ public class GestionCircuitos {
 		ObjectOutputStream oos;
 		try {
 			oos = new ObjectOutputStream(new FileOutputStream(fichCircuitos));
-			for(Circuito c : aCircuitos) {
-				oos.writeObject(c);
-			}
+			oos.writeObject(aCircuitos);
 			oos.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
