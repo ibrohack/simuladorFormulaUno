@@ -1,5 +1,7 @@
 package metodos;
 
+import java.time.LocalTime;
+
 import clases.*;
 import utilidades.Utilidades;
 
@@ -28,28 +30,23 @@ public class GestionPlanDeCarrera {
 
 	public static void repostar(PlanDeCarrera planDeCarrera) {
 		float gasolina;
-		boolean repostar;
-		System.out.println(String.format("El coche tiene %f litros de gasolina", planDeCarrera.getLitrosGasolina()));
-		System.out.println("¿Quieres repostar?");
-		repostar= Utilidades.leerBoolean();
-		if(repostar) {
-			System.out.println("¿Cuantos litors de gasolina quieres repostar(Maximo 110L)?");
-			gasolina=Utilidades.leerFloat(0, 110);
-			planDeCarrera.setLitrosGasolina(gasolina+planDeCarrera.getLitrosGasolina());
-			System.out.println("Se ha repostado con exito.");
-		}
+		System.out.println("¿Cuantos litors de gasolina quieres repostar(Maximo 110L)?");
+		gasolina=Utilidades.leerFloat(0, 110);
+		planDeCarrera.setLitrosGasolina(gasolina+planDeCarrera.getLitrosGasolina());
+		System.out.println("Se ha repostado con exito.");
+
 	}
 
 	public static void desgaste(PlanDeCarrera planDeCarrera) {
 		float desgaste=0;
 		if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("blando")) {
-			desgaste= (float) (1/(1+Math.exp(-((798+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getCircuito().getLongitudCircuito()*0.145))));
+			desgaste= (float) (1/(1+Math.exp(-((798+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getCarera().getCircuitoCarrera().getLongitudCircuito()*0.145))));
 		}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("medio")) {
-			desgaste= (float) (1/(1+Math.exp(-((798+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getCircuito().getLongitudCircuito()*0.1))));
+			desgaste= (float) (1/(1+Math.exp(-((798+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getCarera().getCircuitoCarrera().getLongitudCircuito()*0.1))));
 		}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("duro")) {
-			desgaste= (float) (1/(1+Math.exp(-((798+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getCircuito().getLongitudCircuito()*0.075))));
+			desgaste= (float) (1/(1+Math.exp(-((798+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getCarera().getCircuitoCarrera().getLongitudCircuito()*0.075))));
 		}else {
-			desgaste= (float) (1/(1+Math.exp(-((798+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getCircuito().getLongitudCircuito()*0.055))));
+			desgaste= (float) (1/(1+Math.exp(-((798+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getCarera().getCircuitoCarrera().getLongitudCircuito()*0.055))));
 		}
 		planDeCarrera.setDesgaste(desgaste);
 	}
@@ -93,13 +90,13 @@ public class GestionPlanDeCarrera {
 	public static void consumoDeGasolina(PlanDeCarrera planDeCarrera) {
 		float consumo=0;
 		if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("blando")) {
-			consumo = (float) ((0.5*1.2*1.1*Math.pow(planDeCarrera.getVelocidadMax(),3)+0.014+(768+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getVelocidadMax()*planDeCarrera.getCircuito().getLongitudCircuito())/(0.5*43*Math.pow(10, 6)));
+			consumo = (float) ((0.5*1.2*1.1*Math.pow(planDeCarrera.getVelocidadMax(),3)+0.014+(768+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getVelocidadMax()*planDeCarrera.getCarera().getCircuitoCarrera().getLongitudCircuito())/(0.5*43*Math.pow(10, 6)));
 		}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("medio")) {
-			consumo = (float) ((0.5*1.2*1.1*Math.pow(planDeCarrera.getVelocidadMax(),3)+0.012+(768+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getVelocidadMax()*planDeCarrera.getCircuito().getLongitudCircuito())/(0.5*43*Math.pow(10, 6)));
+			consumo = (float) ((0.5*1.2*1.1*Math.pow(planDeCarrera.getVelocidadMax(),3)+0.012+(768+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getVelocidadMax()*planDeCarrera.getCarera().getCircuitoCarrera().getLongitudCircuito())/(0.5*43*Math.pow(10, 6)));
 		}else if(planDeCarrera.getTipoRueda().toString().equalsIgnoreCase("duro")) {
-			consumo = (float) ((0.5*1.2*1.1*Math.pow(planDeCarrera.getVelocidadMax(),3)+0.01+(768+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getVelocidadMax()*planDeCarrera.getCircuito().getLongitudCircuito())/(0.5*43*Math.pow(10, 6)));
+			consumo = (float) ((0.5*1.2*1.1*Math.pow(planDeCarrera.getVelocidadMax(),3)+0.01+(768+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getVelocidadMax()*planDeCarrera.getCarera().getCircuitoCarrera().getLongitudCircuito())/(0.5*43*Math.pow(10, 6)));
 		}else {
-			consumo = (float) ((0.5*1.2*1.1*Math.pow(planDeCarrera.getVelocidadMax(),3)+0.022+(768+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getVelocidadMax()*planDeCarrera.getCircuito().getLongitudCircuito())/(0.5*43*Math.pow(10, 6)));
+			consumo = (float) ((0.5*1.2*1.1*Math.pow(planDeCarrera.getVelocidadMax(),3)+0.022+(768+planDeCarrera.getLitrosGasolina()*0.7)*9.81*planDeCarrera.getVelocidadMax()*planDeCarrera.getCarera().getCircuitoCarrera().getLongitudCircuito())/(0.5*43*Math.pow(10, 6)));
 		}
 		planDeCarrera.setLitrosGasolina(planDeCarrera.getLitrosGasolina()-consumo);
 	}
@@ -126,6 +123,17 @@ public class GestionPlanDeCarrera {
 		System.out.println("Tipo de conducion actualizad con exito");
 		planDeCarrera.setTipoDeConducion(tipo);
 		planDeCarrera.setDesgaste(0);
+	}
+	
+	public static void calcularTiempoVuelta(PlanDeCarrera planDeCarrera) {
+		float t;
+		int minutos, segundos;
+		LocalTime tiempo;
+		t = (planDeCarrera.getCarera().getCircuitoCarrera().getLongitudCircuito()/planDeCarrera.getVelocidadMax())*60;
+		minutos = (int) t;
+		segundos = (int) (t-minutos)*60;
+		tiempo = LocalTime.of(0, minutos, segundos);
+		planDeCarrera.getPiloto().getTiempos().replace(planDeCarrera.getCarera().getCodigoCarrera(),  planDeCarrera.getPiloto().getTiempos().get(planDeCarrera.getCarera().getCodigoCarrera()).plusMinutes(minutos).plusSeconds(segundos));
 	}
 }
 

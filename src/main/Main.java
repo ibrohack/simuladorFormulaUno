@@ -33,7 +33,7 @@ public class Main {
 				GestionCircuitos.menuCircuitos(fichCircuitos);
 				break;
 			case 3:
-				GestionCarrera.simulacionCarrera(fichCircuitos, fichPilotos);
+				GestionCarrera.simulacionCarrera(fichCircuitos, fichPilotos, fichEscuderia);
 				break;
 			case 0:
 				System.out.println("Saliendo...");
