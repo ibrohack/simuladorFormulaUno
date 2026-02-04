@@ -1,6 +1,7 @@
 package metodos;
 
 import java.io.*;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -62,7 +63,7 @@ public class GestionCarrera {
 
 									case 1:
 										GestionPlanDeCarrera.repostar(p);
-										
+
 										break;
 
 									case 2:
@@ -230,7 +231,7 @@ public class GestionCarrera {
 		}
 		return mecanico;
 	}
-	
+
 	public static void calcularChoque(PlanDeCarrera planDeCarrera) throws AbandonoException {
 		Random r = new Random();
 		if(r.nextDouble()<planDeCarrera.getProbChoque()) {
@@ -238,7 +239,34 @@ public class GestionCarrera {
 		}
 	}
 
+	public static void escribirGanador(File fichP, Carrera c, File fichMarcador) {
+		FileWriter fw = null;
+		BufferedWriter bw = null;
+		ArrayList<Piloto> pilotos = new ArrayList<Piloto>();
+		Piloto piloto = new Piloto();
+		LocalTime tmax = LocalTime.of(10, 0, 0);
+		pilotos = cargarPilotos(pilotos, fichP);
+		for(Piloto p: pilotos) {
+			for(String codigoCarrera: p.getTiempos().keySet()) {
+				if(codigoCarrera.equalsIgnoreCase(c.getCodigoCarrera()) && p.getTiempos().get(p).isAfter(tmax)) {
+					tmax = p.getTiempos().get(codigoCarrera);
+					piloto = p;
+				}
+			}
+		}
+		try {
+			fw = new FileWriter(fichMarcador);
+			bw = new BufferedWriter(fw);
 
+			bw.write(String.format("El ganador de la carrera %s es %s con un tiempo de %s", c.getCodigoCarrera(), piloto.getNombre(), piloto.getTiempos().get(c.getCodigoCarrera()) ));
+			bw.newLine();
+
+			bw.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
 
 

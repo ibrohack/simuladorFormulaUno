@@ -9,6 +9,10 @@ public abstract class Persona {
 		this.codigo = codigo;
 		this.nombre = nombre;
 	}
+	
+	public Persona() {
+		super();
+	}
 
 	public String getCodigo() {
 		return codigo;

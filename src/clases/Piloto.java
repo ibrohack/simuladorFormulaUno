@@ -6,6 +6,10 @@ import java.util.TreeMap;
 public class Piloto extends Persona {
 	private TreeMap<String, LocalTime> tiempos;
 
+	public Piloto() {
+		super();
+	}
+
 	public Piloto(String codigo, String nombre) {
 		super(codigo, nombre);
 		this.tiempos = new TreeMap<String, LocalTime>();
