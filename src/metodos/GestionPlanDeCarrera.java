@@ -11,6 +11,7 @@ public class GestionPlanDeCarrera {
 	public static void cambiarRuedas(PlanDeCarrera planDeCarrera) {
 		boolean tipoCorrecto=false;
 		String tipoRueda;
+		int tiempoCambioNeumaticos;
 		TipoRueda tipo=null;
 		do {
 			System.out.println("Introduce el tipo de rueda que quieres poner (Blando,Medio,Duro o Lluvia)");
@@ -23,6 +24,8 @@ public class GestionPlanDeCarrera {
 				tipoCorrecto = false;
 			}
 		}while(!tipoCorrecto);
+		tiempoCambioNeumaticos= (int) (2.25*planDeCarrera.getMecanico().getFactorCambioNeumaticos());
+		planDeCarrera.getPiloto().getTiempos().replace(planDeCarrera.getPiloto().getCodigo(), planDeCarrera.getPiloto().getTiempos().get(planDeCarrera.getPiloto().getCodigo()).plusSeconds( tiempoCambioNeumaticos));
 		System.out.println("Neumaticos reemplazados con exito.");
 		planDeCarrera.setTipoRueda(tipo);
 		planDeCarrera.setDesgaste(0);
@@ -30,11 +33,13 @@ public class GestionPlanDeCarrera {
 
 	public static void repostar(PlanDeCarrera planDeCarrera) {
 		float gasolina;
+		int tiempoRepostar;
 		System.out.println("¿Cuantos litors de gasolina quieres repostar(Maximo 110L)?");
 		gasolina=Utilidades.leerFloat(0, 110);
 		planDeCarrera.setLitrosGasolina(gasolina+planDeCarrera.getLitrosGasolina());
+		tiempoRepostar= (int) (12*gasolina*planDeCarrera.getMecanico().getFactorRepostaje());
+		planDeCarrera.getPiloto().getTiempos().replace(planDeCarrera.getPiloto().getCodigo(), planDeCarrera.getPiloto().getTiempos().get(planDeCarrera.getPiloto().getCodigo()).plusSeconds(tiempoRepostar));
 		System.out.println("Se ha repostado con exito.");
-
 	}
 
 	public static void desgaste(PlanDeCarrera planDeCarrera) {

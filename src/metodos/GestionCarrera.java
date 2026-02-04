@@ -13,6 +13,7 @@ public class GestionCarrera {
 	public static void simulacionCarrera(File fichCircuito, File fichPilotos, File fichEscuderia) {
 		Carrera carrera = new Carrera();
 		float gasolina;
+		int tiempoCambioNeumaticos, tiempoRepostar;
 		int opciones;
 		Mecanico mecanico = null;
 		ArrayList<Piloto> pilotos = new ArrayList<Piloto>();
@@ -48,6 +49,7 @@ public class GestionCarrera {
 							GestionPlanDeCarrera.consumoDeGasolina(p);
 							GestionPlanDeCarrera.velocidadMaxima(p);
 							GestionPlanDeCarrera.probabilidaChoque(p);
+							GestionPlanDeCarrera.calcularTiempoVuelta(p);
 							if(i== p.getVueltasParaPit()) {
 								System.out.println(String.format("Tienes %f litoros de gasolina restantes en el deposito.\n"
 										+ "El desgaste de los neumaticos es %f%%", p.getLitrosGasolina(), p.getDesgaste()*100));
@@ -55,7 +57,7 @@ public class GestionCarrera {
 								do {
 									switch(opciones) {
 									case 0:
-										
+										System.out.println("Reanudando carrera...");
 										break;
 
 									case 1:
@@ -211,7 +213,6 @@ public class GestionCarrera {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 		return escuderias;
 	}
