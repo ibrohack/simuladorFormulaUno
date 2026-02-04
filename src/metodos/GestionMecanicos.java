@@ -23,16 +23,19 @@ public class GestionMecanicos {
         int opcion;
         do {
             mostrarMenu();
-            opcion = Utilidades.leerInt("Seleccione una opción: ", 0, 3);
+            opcion = Utilidades.leerInt("Seleccione una opción: ", 0, 4);
             switch (opcion) {
                 case 1:
                     introducirMecanico();
                     break;
                 case 2:
-
+                    modificarMecanico();
                     break;
                 case 3:
-
+                    eliminarMecanico();
+                    break;
+                case 4:
+                    mostrarMecanicos();
                     break;
                 case 0:
 
@@ -64,7 +67,7 @@ public class GestionMecanicos {
                 System.out.println("Error: El mecanico con Codigo " + codigo + " ya existe.");
                 System.out.println(mecanicos.get(codigo));
             } else {
-                System.out.println("Introduce el Nombre del Piloto:");
+                System.out.println("Introduce el Nombre del Mecanico:");
                 String nombre = Utilidades.introducirCadena();
 
                 Mecanico nuevoMecanico = new Mecanico(codigo, nombre);
@@ -72,9 +75,58 @@ public class GestionMecanicos {
                 mecanicos.put(codigo, nuevoMecanico);
             }
 
-            System.out.println("¿Desea introducir otro piloto? (S/N):");
+            System.out.println("¿Desea introducir otro mecanico? (S/N):");
             continuar = Utilidades.leerChar('S', 'N');
         } while (continuar == 'S');
+    }
+
+    private static void modificarMecanico() {
+        System.out.println("\n--- MODIFICAR MECANICO ---");
+        System.out.println("Introduce el Codigo de mecanico a modificar:");
+        String codigo = Utilidades.introducirCadena();
+
+        if (mecanicos.containsKey(codigo)) {
+            Mecanico mecanico = mecanicos.get(codigo);
+            System.out.println("Datos actuales del mecanico: " + mecanico);
+
+            System.out.println("Introduce el nuevo Nombre del Mecanico:");
+            String nuevoNombre = Utilidades.introducirCadena();
+
+            mecanico.setNombre(nuevoNombre);
+            System.out.println("Mecanico modificado correctamente.");
+        } else {
+            System.out.println("Error: No existe ningún mecanico con el código " + codigo);
+        }
+    }
+
+    private static void eliminarMecanico() {
+        System.out.println("\n--- ELIMINAR MECANICO ---");
+        System.out.println("Introduce el Codigo de mecanico a eliminar:");
+        String codigo = Utilidades.introducirCadena();
+
+        if (mecanicos.containsKey(codigo)) {
+            System.out.println(
+                    "¿Está seguro de que desea eliminar al mecanico " + mecanicos.get(codigo).getNombre() + "?");
+            if (Utilidades.leerBoolean()) {
+                mecanicos.remove(codigo);
+                System.out.println("Mecanico eliminado correctamente.");
+            } else {
+                System.out.println("Eliminación cancelada.");
+            }
+        } else {
+            System.out.println("Error: No existe ningún mecanico con el código " + codigo);
+        }
+    }
+
+    private static void mostrarMecanicos() {
+        System.out.println("\n--- LISTA DE MECANICOS ---");
+        if (mecanicos.isEmpty()) {
+            System.out.println("No hay mecanicos registrados.");
+        } else {
+            for (Mecanico mecanico : mecanicos.values()) {
+                System.out.println(mecanico);
+            }
+        }
     }
 
     @SuppressWarnings("unchecked")

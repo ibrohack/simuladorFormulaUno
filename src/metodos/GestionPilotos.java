@@ -23,16 +23,20 @@ public class GestionPilotos {
 		int opcion;
 		do {
 			mostrarMenu();
-			opcion = Utilidades.leerInt("Seleccione una opción: ", 0, 3);
+			mostrarMenu();
+			opcion = Utilidades.leerInt("Seleccione una opción: ", 0, 4);
 			switch (opcion) {
 				case 1:
 					introducirPiloto();
 					break;
 				case 2:
-
+					modificarPiloto();
 					break;
 				case 3:
-
+					eliminarPiloto();
+					break;
+				case 4:
+					mostrarPilotos();
 					break;
 				case 0:
 
@@ -75,6 +79,54 @@ public class GestionPilotos {
 			System.out.println("¿Desea introducir otro piloto? (S/N):");
 			continuar = Utilidades.leerChar('S', 'N');
 		} while (continuar == 'S');
+	}
+
+	private static void modificarPiloto() {
+		System.out.println("\n--- MODIFICAR PILOTO ---");
+		System.out.println("Introduce el Codigo de piloto a modificar:");
+		String codigo = Utilidades.introducirCadena();
+
+		if (pilotos.containsKey(codigo)) {
+			Piloto piloto = pilotos.get(codigo);
+			System.out.println("Datos actuales del piloto: " + piloto);
+
+			System.out.println("Introduce el nuevo Nombre del Piloto:");
+			String nuevoNombre = Utilidades.introducirCadena();
+
+			piloto.setNombre(nuevoNombre);
+			System.out.println("Piloto modificado correctamente.");
+		} else {
+			System.out.println("Error: No existe ningún piloto con el código " + codigo);
+		}
+	}
+
+	private static void eliminarPiloto() {
+		System.out.println("\n--- ELIMINAR PILOTO ---");
+		System.out.println("Introduce el Codigo de piloto a eliminar:");
+		String codigo = Utilidades.introducirCadena();
+
+		if (pilotos.containsKey(codigo)) {
+			System.out.println("¿Está seguro de que desea eliminar al piloto " + pilotos.get(codigo).getNombre() + "?");
+			if (Utilidades.leerBoolean()) {
+				pilotos.remove(codigo);
+				System.out.println("Piloto eliminado correctamente.");
+			} else {
+				System.out.println("Eliminación cancelada.");
+			}
+		} else {
+			System.out.println("Error: No existe ningún piloto con el código " + codigo);
+		}
+	}
+
+	private static void mostrarPilotos() {
+		System.out.println("\n--- LISTA DE PILOTOS ---");
+		if (pilotos.isEmpty()) {
+			System.out.println("No hay pilotos registrados.");
+		} else {
+			for (Piloto piloto : pilotos.values()) {
+				System.out.println(piloto);
+			}
+		}
 	}
 
 	@SuppressWarnings("unchecked")
