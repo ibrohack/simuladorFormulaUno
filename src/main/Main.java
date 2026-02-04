@@ -19,6 +19,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		File fichCircuitos = new File("circuitos.dat");
+		File fichPilotos = new File("pilotos.dat");
 		int opcion=0;
 		
 		do {
@@ -30,6 +31,7 @@ public class Main {
 				GestionCircuitos.menuCircuitos(fichCircuitos);
 				break;
 			case 3:
+				GestionCarrera.simulacionCarrera(fichCircuitos, fichPilotos);;
 				break;
 			case 0:
 				System.out.println("Saliendo...");

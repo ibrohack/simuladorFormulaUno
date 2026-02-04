@@ -3,7 +3,6 @@ package clases;
 import java.util.TreeMap;
 
 public class Mecanico extends Persona{
-	private String escuderia;
 	private double factorRepostaje;
 	private double factorCambioNeumaticos;
 	private TreeMap<String, Integer>puntos;
@@ -11,19 +10,11 @@ public class Mecanico extends Persona{
 	public Mecanico(String codigo, String nombre, String escuderia, double factorRepostaje,
 			double factorCambioNeumaticos, TreeMap<String, Integer> puntos) {
 		super(codigo, nombre);
-		this.escuderia = escuderia;
 		this.factorRepostaje = factorRepostaje;
 		this.factorCambioNeumaticos = factorCambioNeumaticos;
 		this.puntos = puntos;
 	}
 
-	public String getEscuderia() {
-		return escuderia;
-	}
-
-	public void setEscuderia(String escuderia) {
-		this.escuderia = escuderia;
-	}
 
 	public double getFactorRepostaje() {
 		return factorRepostaje;
@@ -51,10 +42,7 @@ public class Mecanico extends Persona{
 
 	@Override
 	public String toString() {
-		return "Mecanico [escuderia=" + escuderia + ", factorRepostaje=" + factorRepostaje + ", factorCambioNeumaticos="
+		return "Mecanico [factorRepostaje=" + factorRepostaje + ", factorCambioNeumaticos="
 				+ factorCambioNeumaticos + ", puntos=" + puntos + ", codigo=" + codigo + ", nombre=" + nombre + "]";
 	}
-	
-	
-	
 }
