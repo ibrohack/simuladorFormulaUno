@@ -15,6 +15,13 @@ public class Mecanico extends Persona {
 		this.puntos = puntos;
 	}
 
+	public Mecanico(String codigo, String nombre) {
+		super(codigo, nombre);
+		this.factorRepostaje = 1.0;
+		this.factorCambioNeumaticos = 1.0;
+		this.puntos = new TreeMap<>();
+	}
+
 	public double getFactorRepostaje() {
 		return factorRepostaje;
 	}
