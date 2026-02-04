@@ -13,14 +13,17 @@ public class Main {
 						 + "\n1.- Gestionar Escuderia"
 						 + "\n2.- Gestionar Circuitos"
 						 + "\n3.- Iniciar Carrera"
-						 + "\n0.- Salir");
-		return Utilidades.leerInt(0,3);
+						 + "\n4.- Mostrar marcador"
+						 + "\n0.- Salir"
+						 + "\n5.- Prueba marcador");
+		return Utilidades.leerInt(0,5);
 	}
 	
 	public static void main(String[] args) {
 		File fichCircuitos = new File("circuitos.dat");
 		File fichEscuderia = new File("escuderia.dat");
 		File fichPilotos = new File("pilotos.dat");
+		File fichMarcador = new File("marcador.txt");
 		int opcion=0;
 		
 		do {
@@ -35,10 +38,17 @@ public class Main {
 			case 3:
 				GestionCarrera.simulacionCarrera(fichCircuitos, fichPilotos, fichEscuderia);
 				break;
+			case 4:
+				LecturaMarcador.leerMarcador(fichMarcador);
+				break;
 			case 0:
 				System.out.println("Saliendo...");
 				break;
+			case 5:  //PRUEBA DE ESCRITURA
+				LecturaMarcador.escribirMarcador(fichMarcador);
+				break;
 			}
+
 		}while(opcion!=0);
 	}
 }
