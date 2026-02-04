@@ -1,8 +1,13 @@
 package clases;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
-public class Escuderia {
+public class Escuderia implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	Piloto[] piloto;
 	Mecanico mecanico;
 	String codigoEscuderia;
