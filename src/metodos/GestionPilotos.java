@@ -24,29 +24,23 @@ public class GestionPilotos {
 			switch (opcion) {
 				case 1:
 					introducirPiloto(pilotos);
-					guardarDatos(pilotos);
 					break;
 				case 2:
 					modificarPiloto(pilotos);
-					guardarDatos(pilotos);
 					break;
 				case 3:
 					eliminarPiloto(pilotos);
-					guardarDatos(pilotos);
 					break;
 				case 4:
 					mostrarPilotos(pilotos);
-					guardarDatos(pilotos);
 					break;
 				case 5:
 					verInformacionPiloto(pilotos);
-					guardarDatos(pilotos);
 					break;
 				case 0:
-					guardarDatos(pilotos);
-					System.out.println("Fin del programa.");
 					break;
 			}
+			guardarDatos(pilotos);
 		} while (opcion != 0);
 	}
 
