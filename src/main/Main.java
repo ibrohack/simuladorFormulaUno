@@ -14,9 +14,8 @@ public class Main {
 						 + "\n2.- Gestionar Circuitos"
 						 + "\n3.- Iniciar Carrera"
 						 + "\n4.- Mostrar marcador"
-						 + "\n0.- Salir"
-						 + "\n5.- Prueba marcador");
-		return Utilidades.leerInt(0,5);
+						 + "\n0.- Salir");
+		return Utilidades.leerInt(0,4);
 	}
 	
 	public static void main(String[] args) {
@@ -43,9 +42,6 @@ public class Main {
 				break;
 			case 0:
 				System.out.println("Saliendo...");
-				break;
-			case 5:  //PRUEBA DE ESCRITURA
-				LecturaMarcador.escribirMarcador(fichMarcador);
 				break;
 			}
 
