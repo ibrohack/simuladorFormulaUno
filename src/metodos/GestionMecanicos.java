@@ -62,24 +62,6 @@ public class GestionMecanicos {
         System.out.println("0. Salir");
     }
 
-    private static int calcularSiguienteNumero(Map<String, Mecanico> mecanicos) {
-        int max = 0;
-        for (Mecanico m : mecanicos.values()) {
-            String codigo = m.getCodigo();
-            if (codigo.length() > 3) {
-                try {
-                    int num = Integer.parseInt(codigo.substring(3));
-                    if (num > max) {
-                        max = num;
-                    }
-                } catch (NumberFormatException e) {
-                    // Ignore
-                }
-            }
-        }
-        return max + 1;
-    }
-
     private static void introducirMecanico(Map<String, Mecanico> mecanicos) {
         char continuar;
         do {
@@ -147,6 +129,24 @@ public class GestionMecanicos {
         }
     }
 
+    private static int calcularSiguienteNumero(Map<String, Mecanico> mecanicos) {
+        int max = 0;
+        for (Mecanico m : mecanicos.values()) {
+            String codigo = m.getCodigo();
+            if (codigo.length() > 3) {
+                try {
+                    int num = Integer.parseInt(codigo.substring(3));
+                    if (num > max) {
+                        max = num;
+                    }
+                } catch (NumberFormatException e) {
+                    // Ignore
+                }
+            }
+        }
+        return max + 1;
+    }
+
     @SuppressWarnings("unchecked")
     private static Map<String, Mecanico> cargarDatos() {
         Map<String, Mecanico> mecanicos = new HashMap<>();
@@ -203,7 +203,7 @@ public class GestionMecanicos {
                 for (int i = 0; i < escuderias.size() && !alreadyAssigned; i++) {
                     Escuderia e = escuderias.get(i);
                     if (e.getMecanico() != null && e.getMecanico().getCodigo().equals(mecanico.getCodigo())) {
-                        System.out.println("Error: El mecánico ya pertenece a la escudería " + e.getNombre());
+                        System.out.println("Error: El mecánico ya pertenece a la escudería " + e.getNombreEscuderia());
                         alreadyAssigned = true;
                     }
                 }
@@ -218,7 +218,7 @@ public class GestionMecanicos {
                     boolean found = false;
                     for (int i = 0; i < escuderias.size() && !found; i++) {
                         Escuderia e = escuderias.get(i);
-                        if (e.getCodigo().equalsIgnoreCase(codigoEscuderia)) {
+                        if (e.getCodigoEscuderia().equalsIgnoreCase(codigoEscuderia)) {
                             escuderiaSeleccionada = e;
                             found = true;
                         }
@@ -240,7 +240,7 @@ public class GestionMecanicos {
                             escuderiaSeleccionada.setMecanico(mecanico);
                             GestionEscuderia.guardarEscuderia(ficheroEscuderias, escuderias);
                             System.out.println("Mecánico asignado correctamente a la escudería "
-                                    + escuderiaSeleccionada.getNombre());
+                                    + escuderiaSeleccionada.getNombreEscuderia());
                         }
                     } else {
                         System.out.println("Error: No se encontró una escudería con ese código.");

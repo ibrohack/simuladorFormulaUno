@@ -19,24 +19,6 @@ public class GestionPilotos {
 
 	private static final String RUTA_FICHERO = "pilotos.dat";
 
-	private static int calcularSiguienteNumero(Map<String, Piloto> pilotos) {
-		int max = 0;
-		for (Piloto p : pilotos.values()) {
-			String codigo = p.getCodigo();
-			if (codigo.length() > 3) {
-				try {
-					int num = Integer.parseInt(codigo.substring(3));
-					if (num > max) {
-						max = num;
-					}
-				} catch (NumberFormatException e) {
-					// Ignore invalid formats
-				}
-			}
-		}
-		return max + 1;
-	}
-
 	public static void GestionarPilotos() {
 		Map<String, Piloto> pilotos = cargarDatos();
 
@@ -146,6 +128,24 @@ public class GestionPilotos {
 		}
 	}
 
+	private static int calcularSiguienteNumero(Map<String, Piloto> pilotos) {
+		int max = 0;
+		for (Piloto p : pilotos.values()) {
+			String codigo = p.getCodigo();
+			if (codigo.length() > 3) {
+				try {
+					int num = Integer.parseInt(codigo.substring(3));
+					if (num > max) {
+						max = num;
+					}
+				} catch (NumberFormatException e) {
+					// Ignore invalid formats
+				}
+			}
+		}
+		return max + 1;
+	}
+
 	@SuppressWarnings("unchecked")
 	private static Map<String, Piloto> cargarDatos() {
 		Map<String, Piloto> pilotos = new HashMap<>();
@@ -204,7 +204,8 @@ public class GestionPilotos {
 					Piloto[] pilotosArr = e.getPiloto();
 					for (int j = 0; j < pilotosArr.length && !alreadyAssigned; j++) {
 						if (pilotosArr[j] != null && pilotosArr[j].getCodigo().equals(piloto.getCodigo())) {
-							System.out.println("Error: El piloto ya pertenece a la escudería " + e.getNombre());
+							System.out
+									.println("Error: El piloto ya pertenece a la escudería " + e.getNombreEscuderia());
 							alreadyAssigned = true;
 						}
 					}
@@ -220,7 +221,7 @@ public class GestionPilotos {
 					boolean escuderiaEncontrada = false;
 					for (int i = 0; i < escuderias.size() && !escuderiaEncontrada; i++) {
 						Escuderia e = escuderias.get(i);
-						if (e.getCodigo().equalsIgnoreCase(codigoEscuderia)) {
+						if (e.getCodigoEscuderia().equalsIgnoreCase(codigoEscuderia)) {
 							escuderiaSeleccionada = e;
 							escuderiaEncontrada = true;
 						}
@@ -235,7 +236,7 @@ public class GestionPilotos {
 								piloto.setEscuderia(escuderiaSeleccionada);
 								asignado = true;
 								System.out.println("Piloto añadido correctamente a la escudería "
-										+ escuderiaSeleccionada.getNombre());
+										+ escuderiaSeleccionada.getNombreEscuderia());
 							}
 						}
 
