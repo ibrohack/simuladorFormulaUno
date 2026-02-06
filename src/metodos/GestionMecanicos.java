@@ -1,13 +1,9 @@
 package metodos;
 
-import java.io.EOFException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 import clases.Mecanico;
@@ -20,7 +16,7 @@ public class GestionMecanicos {
     private static final String RUTA_FICHERO = "mecanicos.dat";
 
     public static void GestionarMecanicos() {
-        Map<String, Mecanico> mecanicos = cargarDatos();
+        Map<String, Mecanico> mecanicos = CargarDatos.cargarMecanicos(RUTA_FICHERO);
 
         int opcion;
         do {
@@ -147,28 +143,6 @@ public class GestionMecanicos {
         return max + 1;
     }
 
-    @SuppressWarnings("unchecked")
-    private static Map<String, Mecanico> cargarDatos() {
-        Map<String, Mecanico> mecanicos = new HashMap<>();
-        File archivo = new File(RUTA_FICHERO);
-        if (!archivo.exists()) {
-            return mecanicos;
-        }
-
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-            // Leemos el objeto. Debería ser el Map.
-            Object obj = ois.readObject();
-            if (obj instanceof Map) {
-                mecanicos = (Map<String, Mecanico>) obj;
-            }
-        } catch (EOFException e) {
-            // Fichero vacío
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error al cargar datos: " + e.getMessage());
-        }
-        return mecanicos;
-    }
-
     private static void guardarDatos(Map<String, Mecanico> mecanicos) {
         File archivo = new File(RUTA_FICHERO);
 
@@ -197,7 +171,7 @@ public class GestionMecanicos {
             if (Utilidades.leerChar('S', 'N') == 'S') {
                 File ficheroEscuderias = new File("escuderias.dat");
                 ArrayList<Escuderia> escuderias = new ArrayList<>();
-                escuderias = GestionEscuderia.leerEscuderia(ficheroEscuderias, escuderias);
+                escuderias = CargarDatos.cargarEscuderia(ficheroEscuderias);
 
                 boolean alreadyAssigned = false;
                 for (int i = 0; i < escuderias.size() && !alreadyAssigned; i++) {

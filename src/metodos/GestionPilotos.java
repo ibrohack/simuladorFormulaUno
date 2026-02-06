@@ -1,13 +1,9 @@
 package metodos;
 
-import java.io.EOFException;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
 import java.util.Map;
 
 import clases.Piloto;
@@ -20,7 +16,7 @@ public class GestionPilotos {
 	private static final String RUTA_FICHERO = "pilotos.dat";
 
 	public static void GestionarPilotos() {
-		Map<String, Piloto> pilotos = cargarDatos();
+		Map<String, Piloto> pilotos = CargarDatos.cargarPilotos(RUTA_FICHERO);
 
 		int opcion;
 		do {
@@ -146,28 +142,6 @@ public class GestionPilotos {
 		return max + 1;
 	}
 
-	@SuppressWarnings("unchecked")
-	private static Map<String, Piloto> cargarDatos() {
-		Map<String, Piloto> pilotos = new HashMap<>();
-		File archivo = new File(RUTA_FICHERO);
-		if (!archivo.exists()) {
-			return pilotos;
-		}
-
-		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
-			// Leemos el objeto. Debería ser el Map.
-			Object obj = ois.readObject();
-			if (obj instanceof Map) {
-				pilotos = (Map<String, Piloto>) obj;
-			}
-		} catch (EOFException e) {
-			// Fichero vacío
-		} catch (IOException | ClassNotFoundException e) {
-			System.out.println("Error al cargar datos: " + e.getMessage());
-		}
-		return pilotos;
-	}
-
 	private static void guardarDatos(Map<String, Piloto> pilotos) {
 		File archivo = new File(RUTA_FICHERO);
 
@@ -196,7 +170,7 @@ public class GestionPilotos {
 			if (Utilidades.leerChar('S', 'N') == 'S') {
 				File ficheroEscuderias = new File("escuderias.dat");
 				ArrayList<Escuderia> escuderias = new ArrayList<>();
-				escuderias = GestionEscuderia.leerEscuderia(ficheroEscuderias, escuderias);
+				escuderias = CargarDatos.cargarEscuderia(ficheroEscuderias);
 
 				boolean alreadyAssigned = false;
 				for (int i = 0; i < escuderias.size() && !alreadyAssigned; i++) {

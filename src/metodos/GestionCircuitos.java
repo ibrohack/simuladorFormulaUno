@@ -1,11 +1,9 @@
 package metodos;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
@@ -19,7 +17,7 @@ public class GestionCircuitos {
 		
 		//LEEMOS TODOS LOS DATOS QUE TENGAMOS EN EL FICHERO
 		if(fichCircuitos.exists()) {
-			aCircuitos=leerCircuitos(fichCircuitos, aCircuitos);		
+			aCircuitos=CargarDatos.cargarCircuitos(fichCircuitos);		
 		}
 		
 		do {
@@ -54,29 +52,6 @@ public class GestionCircuitos {
 				 + "\n4.- Mostrar circuitos."
 				 + "\n0.- Salir.");
 		return Utilidades.leerInt(0, 4);
-	}
-	
-	//ESCRITURA DE DATOS DEL FICHERO EN UN ARRAYLIST
-	//SE DEVUELVE EL ARRAYLIST PORQUE SINO PIERDE LA REFERENCIA SEL MISMO
-	@SuppressWarnings("unchecked")
-	public static ArrayList<Circuito> leerCircuitos(File fichCircuitos, ArrayList<Circuito> aCircuitos) {
-		ObjectInputStream ois=null;
-		
-		try {
-			ois=new ObjectInputStream(new FileInputStream(fichCircuitos));
-			Object obj = ois.readObject();
-			if(obj instanceof ArrayList) {
-				aCircuitos=(ArrayList<Circuito>) obj;
-			}
-			ois.close();
-		} catch (FileNotFoundException e) {
-	        System.out.println("No se encontró el fichero.");
-	    } catch (ClassNotFoundException e) {
-	        System.out.println("La clase Persona no es válida.");
-	    } catch (IOException e) {
-	        System.out.println("Error leyendo el fichero.");
-	    }
-		return aCircuitos;
 	}
 	
 	//ESCRITURA DE DATOS DEL ARRAYLIST EN UN FICHERO

@@ -1,11 +1,9 @@
 package metodos;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
@@ -19,7 +17,7 @@ public class GestionEscuderia {
 		
 		//LEEMOS TODOS LOS DATOS QUE TENGAMOS EN EL FICHERO
 		if(fichEscuderia.exists()) {
-			aEscuderia=leerEscuderia(fichEscuderia, aEscuderia);		
+			aEscuderia=CargarDatos.cargarEscuderia(fichEscuderia);		
 		}
 		
 		do {
@@ -62,27 +60,6 @@ public class GestionEscuderia {
 				 + "\n6.- Gestionar Mecanicos"
 				 + "\n0.- Salir.");
 		return Utilidades.leerInt(0, 6);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public static ArrayList<Escuderia> leerEscuderia(File fichEscuderia, ArrayList<Escuderia> aEscuderia){
-		ObjectInputStream ois=null;
-		
-		try {
-			ois=new ObjectInputStream(new FileInputStream(fichEscuderia));
-			Object obj = ois.readObject();
-			if(obj instanceof ArrayList) {
-				aEscuderia=(ArrayList<Escuderia>) obj;
-			}
-			ois.close();
-		} catch (FileNotFoundException e) {
-	        System.out.println("No se encontró el fichero.");
-	    } catch (ClassNotFoundException e) {
-	        System.out.println("La clase Persona no es válida.");
-	    } catch (IOException e) {
-	        System.out.println("Error leyendo el fichero.");
-	    }
-		return aEscuderia;
 	}
 	
 	public static void guardarEscuderia(File fichEscuderia, ArrayList<Escuderia> aEscuderia) {
