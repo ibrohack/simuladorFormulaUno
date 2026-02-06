@@ -198,40 +198,55 @@ public class GestionPilotos {
 				ArrayList<Escuderia> escuderias = new ArrayList<>();
 				escuderias = GestionEscuderia.leerEscuderia(ficheroEscuderias, escuderias);
 
-				GestionEscuderia.mostrarEscuderia(escuderias);
-
-				System.out.println("Introduce el Código de la Escudería:");
-				String codigoEscuderia = Utilidades.introducirCadena();
-
-				Escuderia escuderiaSeleccionada = null;
-				boolean escuderiaEncontrada = false;
-				for (int i = 0; i < escuderias.size() && !escuderiaEncontrada; i++) {
+				boolean alreadyAssigned = false;
+				for (int i = 0; i < escuderias.size() && !alreadyAssigned; i++) {
 					Escuderia e = escuderias.get(i);
-					if (e.getCodigo().equalsIgnoreCase(codigoEscuderia)) {
-						escuderiaSeleccionada = e;
-						escuderiaEncontrada = true;
+					Piloto[] pilotosArr = e.getPiloto();
+					for (int j = 0; j < pilotosArr.length && !alreadyAssigned; j++) {
+						if (pilotosArr[j] != null && pilotosArr[j].getCodigo().equals(piloto.getCodigo())) {
+							System.out.println("Error: El piloto ya pertenece a la escudería " + e.getNombre());
+							alreadyAssigned = true;
+						}
 					}
 				}
 
-				if (escuderiaSeleccionada != null) {
-					Piloto[] pilotosEscuderia = escuderiaSeleccionada.getPiloto();
-					boolean asignado = false;
-					for (int i = 0; i < pilotosEscuderia.length && !asignado; i++) {
-						if (pilotosEscuderia[i] == null) {
-							pilotosEscuderia[i] = piloto;
-							asignado = true;
-							System.out.println(
-									"Piloto añadido correctamente a la escudería " + escuderiaSeleccionada.getNombre());
+				if (!alreadyAssigned) {
+					GestionEscuderia.mostrarEscuderia(escuderias);
+
+					System.out.println("Introduce el Código de la Escudería:");
+					String codigoEscuderia = Utilidades.introducirCadena();
+
+					Escuderia escuderiaSeleccionada = null;
+					boolean escuderiaEncontrada = false;
+					for (int i = 0; i < escuderias.size() && !escuderiaEncontrada; i++) {
+						Escuderia e = escuderias.get(i);
+						if (e.getCodigo().equalsIgnoreCase(codigoEscuderia)) {
+							escuderiaSeleccionada = e;
+							escuderiaEncontrada = true;
 						}
 					}
 
-					if (!asignado) {
-						System.out.println("Error: La escudería ya tiene el máximo de 2 pilotos.");
+					if (escuderiaSeleccionada != null) {
+						Piloto[] pilotosEscuderia = escuderiaSeleccionada.getPiloto();
+						boolean asignado = false;
+						for (int i = 0; i < pilotosEscuderia.length && !asignado; i++) {
+							if (pilotosEscuderia[i] == null) {
+								pilotosEscuderia[i] = piloto;
+								piloto.setEscuderia(escuderiaSeleccionada);
+								asignado = true;
+								System.out.println("Piloto añadido correctamente a la escudería "
+										+ escuderiaSeleccionada.getNombre());
+							}
+						}
+
+						if (!asignado) {
+							System.out.println("Error: La escudería ya tiene el máximo de 2 pilotos.");
+						} else {
+							GestionEscuderia.guardarEscuderia(ficheroEscuderias, escuderias);
+						}
 					} else {
-						GestionEscuderia.guardarEscuderia(ficheroEscuderias, escuderias);
+						System.out.println("Error: No se encontró una escudería con ese código.");
 					}
-				} else {
-					System.out.println("Error: No se encontró una escudería con ese código.");
 				}
 			}
 		} else {

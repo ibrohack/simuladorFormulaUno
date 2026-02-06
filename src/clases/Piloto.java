@@ -4,6 +4,7 @@ import java.time.LocalTime;
 import java.util.TreeMap;
 
 public class Piloto extends Persona {
+	private Escuderia escuderia;
 	private TreeMap<String, LocalTime> tiempos;
 
 	public Piloto() {
@@ -21,6 +22,14 @@ public class Piloto extends Persona {
 
 	public void setTiempos(TreeMap<String, LocalTime> tiempos) {
 		this.tiempos = tiempos;
+	}
+
+	public Escuderia getEscuderia() {
+		return escuderia;
+	}
+
+	public void setEscuderia(Escuderia escuderia) {
+		this.escuderia = escuderia;
 	}
 
 	@Override

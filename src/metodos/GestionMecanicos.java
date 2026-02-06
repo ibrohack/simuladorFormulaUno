@@ -199,7 +199,6 @@ public class GestionMecanicos {
                 ArrayList<Escuderia> escuderias = new ArrayList<>();
                 escuderias = GestionEscuderia.leerEscuderia(ficheroEscuderias, escuderias);
 
-                // Check if mechanic is already assigned
                 boolean alreadyAssigned = false;
                 for (int i = 0; i < escuderias.size() && !alreadyAssigned; i++) {
                     Escuderia e = escuderias.get(i);
