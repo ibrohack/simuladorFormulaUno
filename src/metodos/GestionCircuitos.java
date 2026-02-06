@@ -36,11 +36,11 @@ public class GestionCircuitos {
 				mostrarCircuitos(aCircuitos);
 				break;
 			case 0:
-				//GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
-				guardarCircuitos(fichCircuitos, aCircuitos);
 				System.out.println("Volviendo al Menu Principal...");
 				break;
 			}
+			//GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
+			guardarCircuitos(fichCircuitos, aCircuitos);
 		}while(opciones != 0);
 	}
 	

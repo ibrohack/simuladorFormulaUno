@@ -42,11 +42,11 @@ public class GestionEscuderia {
 				GestionMecanicos.GestionarMecanicos();
 				break;
 			case 0:
-				//GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
-				guardarEscuderia(fichEscuderia, aEscuderia);
 				System.out.println("Volviendo al Menu Principal...");
 				break;
 			}
+			//GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
+			guardarEscuderia(fichEscuderia, aEscuderia);
 		}while(opciones != 0);
 	}
 	
@@ -95,7 +95,7 @@ public class GestionEscuderia {
 			else {
 				System.out.println("El nombre de la escuderia ya existe.");
 			}
-			System.out.println("\n¿Quiéres añadir más circuitos?");
+			System.out.println("\n¿Quiéres añadir más escuderias?");
 			continuar = Utilidades.introducirCadena("SI","NO");
 		}while(continuar.equalsIgnoreCase("SI"));
 	}
@@ -171,7 +171,7 @@ public class GestionEscuderia {
 		String nombreEscuderia;
 		int posicion;
 		
-		System.out.println("Introduce el nombre del circuito");
+		System.out.println("Introduce el nombre del escuderias");
 		nombreEscuderia = Utilidades.introducirCadena();
 		posicion = buscarNombre(aEscuderia, nombreEscuderia);
 		if(posicion != -1) {
@@ -188,7 +188,7 @@ public class GestionEscuderia {
 				System.out.println("\n" + e);
 			}
 		}else {
-			System.out.println("No hay circuitos registrados.");
+			System.out.println("No hay escuderias registrados.");
 		}
 	}
 }
