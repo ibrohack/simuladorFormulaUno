@@ -3,13 +3,17 @@ package clases;
 public abstract class Persona {
 	protected String codigo;
 	protected String nombre;
-	
-	public Persona(String codigo, String nombre) {
+
+	public Persona(String nombre, int numero, String prefijo) {
 		super();
-		this.codigo = codigo;
 		this.nombre = nombre;
+		this.codigo = generarCodigo(prefijo, numero);
 	}
-	
+
+	private String generarCodigo(String prefijo, int numero) {
+		return prefijo + numero;
+	}
+
 	public Persona() {
 		super();
 	}
@@ -34,6 +38,5 @@ public abstract class Persona {
 	public String toString() {
 		return "Persona [codigo=" + codigo + ", nombre=" + nombre + "]";
 	}
-	
-	
+
 }

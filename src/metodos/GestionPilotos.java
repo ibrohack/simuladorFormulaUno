@@ -11,78 +11,95 @@ import java.util.HashMap;
 import java.util.Map;
 
 import clases.Piloto;
+import clases.Escuderia;
 import utilidades.Utilidades;
+import java.util.ArrayList;
 
 public class GestionPilotos {
-	private static Map<String, Piloto> pilotos = new HashMap<>();
-	private static final String RUTA_FICHERO = "C:\\pilotos.dat";
+
+	private static final String RUTA_FICHERO = "pilotos.dat";
+
+	private static int calcularSiguienteNumero(Map<String, Piloto> pilotos) {
+		int max = 0;
+		for (Piloto p : pilotos.values()) {
+			String codigo = p.getCodigo();
+			if (codigo.length() > 3) {
+				try {
+					int num = Integer.parseInt(codigo.substring(3));
+					if (num > max) {
+						max = num;
+					}
+				} catch (NumberFormatException e) {
+					// Ignore invalid formats
+				}
+			}
+		}
+		return max + 1;
+	}
 
 	public static void GestionarPilotos() {
-		cargarDatos();
+		Map<String, Piloto> pilotos = cargarDatos();
 
 		int opcion;
 		do {
-			mostrarMenu();
-			mostrarMenu();
-			opcion = Utilidades.leerInt("Seleccione una opción: ", 0, 4);
+			opcion = mostrarMenu();
 			switch (opcion) {
 				case 1:
-					introducirPiloto();
+					introducirPiloto(pilotos);
 					break;
 				case 2:
-					modificarPiloto();
+					modificarPiloto(pilotos);
 					break;
 				case 3:
-					eliminarPiloto();
+					eliminarPiloto(pilotos);
 					break;
 				case 4:
-					mostrarPilotos();
+					mostrarPilotos(pilotos);
+					break;
+				case 5:
+					verInformacionPiloto(pilotos);
 					break;
 				case 0:
 
 					System.out.println("Fin del programa.");
 					break;
 			}
-			guardarDatos();
+			guardarDatos(pilotos);
 		} while (opcion != 0);
 	}
 
-	private static void mostrarMenu() {
-		System.out.println("\n--- GESTIÓN DE PILOTOS ---");
-		System.out.println("1. Introducir un nuevo Piloto");
-		System.out.println("2. Modificar Piloto");
-		System.out.println("3. Eliminar Piloto");
-		System.out.println("4. Mostrar pilotos");
+	private static int mostrarMenu() {
+		System.out.println("\n===== GESTIÓN DE PILOTOS =====");
+		System.out.println("1.- Introducir un nuevo Piloto");
+		System.out.println("2.- Modificar Piloto");
+		System.out.println("3.- Eliminar Piloto");
+		System.out.println("4.- Mostrar pilotos");
+		System.out.println("5.- Ver información de Piloto y Asignar a Escudería");
 
-		System.out.println("0. Salir");
+		System.out.println("0.- Salir");
+		return Utilidades.leerInt("Seleccione una opción: ", 0, 5);
 	}
 
-	private static void introducirPiloto() {
+	private static void introducirPiloto(Map<String, Piloto> pilotos) {
 		char continuar;
 		do {
-			System.out.println("\n--- ALTA DE PILOTO ---");
-			System.out.println("Introduce el Codigo de piloto:");
-			String codigo = Utilidades.introducirCadena();
+			System.out.println("\n===== ALTA DE PILOTO =====");
+			System.out.println("Introduce el Nombre del Piloto:");
+			String nombre = Utilidades.introducirCadena();
 
-			if (pilotos.containsKey(codigo)) {
-				System.out.println("Error: El piloto con Codigo " + codigo + " ya existe.");
-				System.out.println(pilotos.get(codigo));
-			} else {
-				System.out.println("Introduce el Nombre del Piloto:");
-				String nombre = Utilidades.introducirCadena();
+			int numero = calcularSiguienteNumero(pilotos);
+			Piloto nuevoPiloto = new Piloto(nombre, numero);
 
-				Piloto nuevoPiloto = new Piloto(codigo, nombre);
-
-				pilotos.put(codigo, nuevoPiloto);
-			}
+			pilotos.put(nuevoPiloto.getCodigo(), nuevoPiloto);
+			System.out.println("Piloto creado con código: " + nuevoPiloto.getCodigo());
 
 			System.out.println("¿Desea introducir otro piloto? (S/N):");
 			continuar = Utilidades.leerChar('S', 'N');
 		} while (continuar == 'S');
 	}
 
-	private static void modificarPiloto() {
-		System.out.println("\n--- MODIFICAR PILOTO ---");
+	private static void modificarPiloto(Map<String, Piloto> pilotos) {
+		System.out.println("\n===== MODIFICAR PILOTO =====");
 		System.out.println("Introduce el Codigo de piloto a modificar:");
 		String codigo = Utilidades.introducirCadena();
 
@@ -100,8 +117,8 @@ public class GestionPilotos {
 		}
 	}
 
-	private static void eliminarPiloto() {
-		System.out.println("\n--- ELIMINAR PILOTO ---");
+	private static void eliminarPiloto(Map<String, Piloto> pilotos) {
+		System.out.println("\n===== ELIMINAR PILOTO =====");
 		System.out.println("Introduce el Codigo de piloto a eliminar:");
 		String codigo = Utilidades.introducirCadena();
 
@@ -118,8 +135,8 @@ public class GestionPilotos {
 		}
 	}
 
-	private static void mostrarPilotos() {
-		System.out.println("\n--- LISTA DE PILOTOS ---");
+	private static void mostrarPilotos(Map<String, Piloto> pilotos) {
+		System.out.println("\n===== LISTA DE PILOTOS =====");
 		if (pilotos.isEmpty()) {
 			System.out.println("No hay pilotos registrados.");
 		} else {
@@ -130,11 +147,11 @@ public class GestionPilotos {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void cargarDatos() {
+	private static Map<String, Piloto> cargarDatos() {
+		Map<String, Piloto> pilotos = new HashMap<>();
 		File archivo = new File(RUTA_FICHERO);
 		if (!archivo.exists()) {
-
-			return;
+			return pilotos;
 		}
 
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(archivo))) {
@@ -148,9 +165,10 @@ public class GestionPilotos {
 		} catch (IOException | ClassNotFoundException e) {
 			System.out.println("Error al cargar datos: " + e.getMessage());
 		}
+		return pilotos;
 	}
 
-	private static void guardarDatos() {
+	private static void guardarDatos(Map<String, Piloto> pilotos) {
 		File archivo = new File(RUTA_FICHERO);
 
 		if (archivo.getParentFile() != null) {
@@ -162,6 +180,62 @@ public class GestionPilotos {
 			System.out.println("Datos guardados correctamente en " + RUTA_FICHERO);
 		} catch (IOException e) {
 			System.out.println("Error al guardar datos: " + e.getMessage());
+		}
+	}
+
+	private static void verInformacionPiloto(Map<String, Piloto> pilotos) {
+		System.out.println("\n===== VER INFORMACIÓN DE PILOTO =====");
+		System.out.println("Introduce el Codigo de piloto:");
+		String codigo = Utilidades.introducirCadena();
+
+		if (pilotos.containsKey(codigo)) {
+			Piloto piloto = pilotos.get(codigo);
+			System.out.println(piloto);
+
+			System.out.println("¿Desea agregar el piloto a una escudería? (S/N):");
+			if (Utilidades.leerChar('S', 'N') == 'S') {
+				File ficheroEscuderias = new File("escuderias.dat");
+				ArrayList<Escuderia> escuderias = new ArrayList<>();
+				escuderias = GestionEscuderia.leerEscuderia(ficheroEscuderias, escuderias);
+
+				GestionEscuderia.mostrarEscuderia(escuderias);
+
+				System.out.println("Introduce el Código de la Escudería:");
+				String codigoEscuderia = Utilidades.introducirCadena();
+
+				Escuderia escuderiaSeleccionada = null;
+				boolean escuderiaEncontrada = false;
+				for (int i = 0; i < escuderias.size() && !escuderiaEncontrada; i++) {
+					Escuderia e = escuderias.get(i);
+					if (e.getCodigo().equalsIgnoreCase(codigoEscuderia)) {
+						escuderiaSeleccionada = e;
+						escuderiaEncontrada = true;
+					}
+				}
+
+				if (escuderiaSeleccionada != null) {
+					Piloto[] pilotosEscuderia = escuderiaSeleccionada.getPiloto();
+					boolean asignado = false;
+					for (int i = 0; i < pilotosEscuderia.length && !asignado; i++) {
+						if (pilotosEscuderia[i] == null) {
+							pilotosEscuderia[i] = piloto;
+							asignado = true;
+							System.out.println(
+									"Piloto añadido correctamente a la escudería " + escuderiaSeleccionada.getNombre());
+						}
+					}
+
+					if (!asignado) {
+						System.out.println("Error: La escudería ya tiene el máximo de 2 pilotos.");
+					} else {
+						GestionEscuderia.guardarEscuderia(ficheroEscuderias, escuderias);
+					}
+				} else {
+					System.out.println("Error: No se encontró una escudería con ese código.");
+				}
+			}
+		} else {
+			System.out.println("Error: No existe ningún piloto con el código " + codigo);
 		}
 	}
 }

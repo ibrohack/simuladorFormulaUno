@@ -10,8 +10,8 @@ public class Piloto extends Persona {
 		super();
 	}
 
-	public Piloto(String codigo, String nombre) {
-		super(codigo, nombre);
+	public Piloto(String nombre, int numero) {
+		super(nombre, numero, "PIL");
 		this.tiempos = new TreeMap<String, LocalTime>();
 	}
 

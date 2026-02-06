@@ -7,16 +7,16 @@ public class Mecanico extends Persona {
 	private double factorCambioNeumaticos;
 	private TreeMap<String, Integer> puntos;
 
-	public Mecanico(String codigo, String nombre, String escuderia, double factorRepostaje,
+	public Mecanico(String nombre, int numero, String escuderia, double factorRepostaje,
 			double factorCambioNeumaticos, TreeMap<String, Integer> puntos) {
-		super(codigo, nombre);
+		super(nombre, numero, "MEC");
 		this.factorRepostaje = factorRepostaje;
 		this.factorCambioNeumaticos = factorCambioNeumaticos;
 		this.puntos = puntos;
 	}
 
-	public Mecanico(String codigo, String nombre) {
-		super(codigo, nombre);
+	public Mecanico(String nombre, int numero) {
+		super(nombre, numero, "MEC");
 		this.factorRepostaje = 1.0;
 		this.factorCambioNeumaticos = 1.0;
 		this.puntos = new TreeMap<>();
