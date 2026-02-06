@@ -44,19 +44,19 @@ public class Escuderia implements Serializable{
 		this.mecanico = mecanico;
 	}
 
-	public String getCodigo() {
+	public String getCodigoEscuderia() {
 		return codigoEscuderia;
 	}
 
-	public void setCodigo(String codigo) {
+	public void setCodigoEscuderia(String codigo) {
 		this.codigoEscuderia = codigo;
 	}
 
-	public String getNombre() {
+	public String getNombreEscuderia() {
 		return nombreEscuderia;
 	}
 
-	public void setNombre(String nombre) {
+	public void setNombreEscuderia(String nombre) {
 		this.nombreEscuderia = nombre;
 	}
 
