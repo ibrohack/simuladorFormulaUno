@@ -11,7 +11,7 @@ import utilidades.Utilidades;
 
 public class GestionCarrera {
 
-	public static void simulacionCarrera(File fichCircuito, File fichPilotos, File fichEscuderia) {
+	public static void simulacionCarrera(File fichCircuito, File fichPilotos, File fichMarcador ) {
 		Carrera carrera = new Carrera();
 		float gasolina;
 		int tiempoCambioNeumaticos, tiempoRepostar;
@@ -29,7 +29,7 @@ public class GestionCarrera {
 						System.out.println("***********Selecion de la configuracion inicial**********");
 						PlanDeCarrera planDeCarrera = new PlanDeCarrera();
 						planDeCarrera.setPiloto(piloto);
-						planDeCarrera.setCircuito(circuito);
+						planDeCarrera.getCarera().setCircuitoCarrera(circuito);
 						GestionPlanDeCarrera.cambiarRuedas(planDeCarrera);
 						GestionPlanDeCarrera.repostar(planDeCarrera);
 						GestionPlanDeCarrera.cambiarTipoDeConducion(planDeCarrera);
@@ -37,7 +37,7 @@ public class GestionCarrera {
 						planDeCarrera.setVueltasParaPit(carrera.getCircuitoCarrera().getNumeroVuletas());
 						GestionPlanDeCarrera.velocidadMaxima(planDeCarrera);
 						GestionPlanDeCarrera.probabilidaChoque(planDeCarrera);
-						mecanico = cargarMecanico(planDeCarrera, fichEscuderia);
+						mecanico = cargarMecanico(planDeCarrera);
 						planDeCarrera.setMecanico(mecanico);
 						carrera.getCoches().put(piloto.getCodigo(), planDeCarrera);
 						System.out.println("Configuracion inicial selecionada con exito.");
@@ -83,6 +83,7 @@ public class GestionCarrera {
 					}
 				}
 			}
+			escribirGanador(fichPilotos, carrera, fichMarcador);
 		}else {
 			System.out.println("No hay pilotos o circuitos");
 		}
@@ -186,49 +187,9 @@ public class GestionCarrera {
 		return pilotos;
 	}
 
-	@SuppressWarnings("unchecked")
-	public static ArrayList<Escuderia> cargarEscuderias(File fichEscuderia, ArrayList<Escuderia> escuderias) {
-		ObjectInputStream ois;
-		boolean finArchivo=false;
-		if(fichEscuderia.exists()) {
-			try {
-				ois = new ObjectInputStream(new FileInputStream(fichEscuderia));
-				while(!finArchivo) {
-					try {
-						Object obj = ois.readObject();
-						if(obj instanceof ArrayList) {
-							escuderias = (ArrayList<Escuderia>) obj;
-						}
-					}catch(EOFException e) {
-						finArchivo=true;
-					}
-				}
-				ois.close();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		return escuderias;
-	}
-
-	public static Mecanico cargarMecanico(PlanDeCarrera planDeCarrera, File fichE) {
-		Mecanico mecanico = null;
-		boolean encontrado = false;
-		ArrayList<Escuderia> escuderias = new ArrayList<Escuderia>();
-		escuderias = cargarEscuderias(fichE, escuderias);
-		for(int i=0; i<escuderias.size() && !encontrado; ) {
-			if(planDeCarrera.getPiloto().getCodEscuderia().equalsIgnoreCase(escuderias.get(i).getCodigo())) {
-				mecanico = escuderias.get(i).getMecanico();
-				encontrado = true;
-			}
-		}
+	
+	public static Mecanico cargarMecanico(PlanDeCarrera planDeCarrera) {
+		Mecanico mecanico = planDeCarrera.getPiloto().getEscuderia().getMecanico();		
 		return mecanico;
 	}
 
