@@ -132,11 +132,11 @@ public class GestionEscuderia {
 		//EN CASO DE QUE SEA DISTINTO TERMINAMOS LA EJECUCION Y LO GUARDAMOS
 		if(!aEscuderia.isEmpty()) {
 			for(int i=0; i < aEscuderia.size() && !fin; i++) {
-				if(Integer.parseInt(aEscuderia.get(i).getCodigo().substring(6)) != nuevoCod) {
+				if(Integer.parseInt(aEscuderia.get(i).getCodigoEscuderia().substring(6)) != nuevoCod) {
 					fin = true;
 				}
 				if(!fin) {
-					nuevoCod = Integer.parseInt(aEscuderia.get(i).getCodigo().substring(6))+1;
+					nuevoCod = Integer.parseInt(aEscuderia.get(i).getCodigoEscuderia().substring(6))+1;
 				}
 			}
 			
@@ -154,7 +154,7 @@ public class GestionEscuderia {
 		int posicion=-1;
 		
 		for(int i=0; i < aEscuderia.size() && posicion == -1; i++) {
-			if(aEscuderia.get(i).getNombre().equalsIgnoreCase(nombre)) {
+			if(aEscuderia.get(i).getNombreEscuderia().equalsIgnoreCase(nombre)) {
 				posicion = i;
 			}
 		}
@@ -170,7 +170,7 @@ public class GestionEscuderia {
 		nombreEscuderia = Utilidades.introducirCadena();
 		posicion = buscarNombre(aEscuderia, nombreEscuderia);
 		if(posicion != -1) {
-			System.out.println("Introduce el nuevo nombre." + " (Nombre actual: " + aEscuderia.get(posicion).getNombre() + ")");
+			System.out.println("Introduce el nuevo nombre." + " (Nombre actual: " + aEscuderia.get(posicion).getNombreEscuderia() + ")");
 			while(!correcto) {
 				correcto=true;
 				nNombre=Utilidades.introducirCadena();
@@ -182,8 +182,8 @@ public class GestionEscuderia {
 					correcto=false;
 				}
 			}
-			aEscuderia.get(posicion).setNombre(nNombre);
-			aEscuderia.get(posicion).setCodigo(nNombre.substring(0,5).toUpperCase() + "-" + aEscuderia.get(posicion).getCodigo().substring(6));
+			aEscuderia.get(posicion).setNombreEscuderia(nNombre);
+			aEscuderia.get(posicion).setCodigoEscuderia(nNombre.substring(0,5).toUpperCase() + "-" + aEscuderia.get(posicion).getCodigoEscuderia().substring(6));
 			System.out.println("Cambios realizados correctamente.");
 		}else {
 			System.out.println("El nombre de la escuderia no esta registrada.");
