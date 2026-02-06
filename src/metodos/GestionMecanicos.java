@@ -25,25 +25,30 @@ public class GestionMecanicos {
             switch (opcion) {
                 case 1:
                     introducirMecanico(mecanicos);
+                    guardarDatos(mecanicos);
                     break;
                 case 2:
                     modificarMecanico(mecanicos);
+                    guardarDatos(mecanicos);
                     break;
                 case 3:
                     eliminarMecanico(mecanicos);
+                    guardarDatos(mecanicos);
                     break;
                 case 4:
                     mostrarMecanicos(mecanicos);
+                    guardarDatos(mecanicos);
                     break;
                 case 5:
                     verInformacionMecanico(mecanicos);
+                    guardarDatos(mecanicos);
                     break;
                 case 0:
-
+                    guardarDatos(mecanicos);
                     System.out.println("Fin del programa.");
                     break;
             }
-            guardarDatos(mecanicos);
+
         } while (opcion != 0);
     }
 
