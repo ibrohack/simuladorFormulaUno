@@ -14,12 +14,12 @@ public class GestionEscuderia {
 	public static void menuEscuderia(File fichEscuderia) {
 		ArrayList<Escuderia> aEscuderia = new ArrayList<Escuderia>();
 		int opciones;
-		
+
 		//LEEMOS TODOS LOS DATOS QUE TENGAMOS EN EL FICHERO
 		if(fichEscuderia.exists()) {
 			aEscuderia=CargarDatos.cargarEscuderia(fichEscuderia);		
 		}
-		
+
 		do {
 			opciones = menu();
 			switch(opciones) {
@@ -42,26 +42,26 @@ public class GestionEscuderia {
 				GestionMecanicos.GestionarMecanicos();
 				break;
 			case 0:
+				//GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
+				guardarEscuderia(fichEscuderia, aEscuderia);
 				System.out.println("Volviendo al Menu Principal...");
 				break;
 			}
-			//GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
-			guardarEscuderia(fichEscuderia, aEscuderia);
 		}while(opciones != 0);
 	}
-	
+
 	public static int menu() {
 		System.out.println("\n===== Gestión de Escuderias ====="
-				 + "\n1.- Añadir escuderias."
-				 + "\n2.- Modificar escuderias."
-				 + "\n3.- Eliminar escuderias."
-				 + "\n4.- Mostrar escuderias."
-				 + "\n5.- Gestionar Pilotos"
-				 + "\n6.- Gestionar Mecanicos"
-				 + "\n0.- Salir.");
+				+ "\n1.- Añadir escuderias."
+				+ "\n2.- Modificar escuderias."
+				+ "\n3.- Eliminar escuderias."
+				+ "\n4.- Mostrar escuderias."
+				+ "\n5.- Gestionar Pilotos"
+				+ "\n6.- Gestionar Mecanicos"
+				+ "\n0.- Salir.");
 		return Utilidades.leerInt(0, 6);
 	}
-	
+
 	public static void guardarEscuderia(File fichEscuderia, ArrayList<Escuderia> aEscuderia) {
 		ObjectOutputStream oos;
 		try {
@@ -74,10 +74,10 @@ public class GestionEscuderia {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void anadirEscuderia(ArrayList<Escuderia> aEscuderia) {
 		String nombreEscuderia, codigo, continuar;
-		
+
 		do {
 			System.out.println("Introduce el nombre de la escuderia: ");
 			nombreEscuderia=Utilidades.introducirCadena();
@@ -87,7 +87,7 @@ public class GestionEscuderia {
 			}
 			if(buscarNombre(aEscuderia, nombreEscuderia)==-1) {
 				codigo = crearCodigo(aEscuderia);
-				
+
 				Escuderia e = new Escuderia(codigo, nombreEscuderia);
 				aEscuderia.add(e);
 				System.out.println("Escuderia añadida correctamente.");
@@ -95,16 +95,16 @@ public class GestionEscuderia {
 			else {
 				System.out.println("El nombre de la escuderia ya existe.");
 			}
-			System.out.println("\n¿Quiéres añadir más escuderias?");
+			System.out.println("\n¿Quiéres añadir más circuitos?");
 			continuar = Utilidades.introducirCadena("SI","NO");
 		}while(continuar.equalsIgnoreCase("SI"));
 	}
-	
+
 	public static String crearCodigo(ArrayList<Escuderia> aEscuderia) {
 		String codigo = "001";
 		int nuevoCod = 1;
 		boolean fin = false;
-		
+
 		//COMPARAMOS EL CODIGO ACTUAL CON EL QUE SE SUPONE QUE DEBERIA SER
 		//EN CASO DE QUE SEA DISTINTO TERMINAMOS LA EJECUCION Y LO GUARDAMOS
 		if(!aEscuderia.isEmpty()) {
@@ -116,7 +116,7 @@ public class GestionEscuderia {
 					nuevoCod = Integer.parseInt(aEscuderia.get(i).getCodigoEscuderia().substring(6))+1;
 				}
 			}
-			
+
 			//PARA QUE EL CODIGO CONTENGA 3 DIGITOS TENEMOS EN CUENTA LA LO LONGITUD DEL MISMO
 			if(String.valueOf(nuevoCod).length()==1) {
 				codigo = "00" + String.valueOf(nuevoCod);
@@ -126,10 +126,10 @@ public class GestionEscuderia {
 		}
 		return codigo;
 	}
-	
+
 	public static int buscarNombre(ArrayList<Escuderia> aEscuderia, String nombre) {
 		int posicion=-1;
-		
+
 		for(int i=0; i < aEscuderia.size() && posicion == -1; i++) {
 			if(aEscuderia.get(i).getNombreEscuderia().equalsIgnoreCase(nombre)) {
 				posicion = i;
@@ -137,12 +137,12 @@ public class GestionEscuderia {
 		}
 		return posicion;
 	}
-	
+
 	public static void modificarEscuderia(ArrayList<Escuderia> aEscuderia) {
 		String nombreEscuderia, nNombre="";
 		int posicion;
 		boolean correcto=false;
-		
+
 		System.out.println("Introduce el nombre de la escuderia: ");
 		nombreEscuderia = Utilidades.introducirCadena();
 		posicion = buscarNombre(aEscuderia, nombreEscuderia);
@@ -166,12 +166,12 @@ public class GestionEscuderia {
 			System.out.println("El nombre de la escuderia no esta registrada.");
 		}
 	}
-	
+
 	public static void eliminarEscuderia(ArrayList<Escuderia> aEscuderia) {
 		String nombreEscuderia;
 		int posicion;
-		
-		System.out.println("Introduce el nombre del escuderias");
+
+		System.out.println("Introduce el nombre del circuito");
 		nombreEscuderia = Utilidades.introducirCadena();
 		posicion = buscarNombre(aEscuderia, nombreEscuderia);
 		if(posicion != -1) {
@@ -181,14 +181,14 @@ public class GestionEscuderia {
 			System.out.println("El nombre de la escuderia no esta registrada.");
 		}
 	}
-	
+
 	public static void mostrarEscuderia(ArrayList<Escuderia> aEscuderia) {
 		if(!aEscuderia.isEmpty()) {
 			for(Escuderia e : aEscuderia) {
 				System.out.println("\n" + e);
 			}
 		}else {
-			System.out.println("No hay escuderias registrados.");
+			System.out.println("No hay circuitos registrados.");
 		}
 	}
 }

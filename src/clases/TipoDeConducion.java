@@ -1,5 +1,5 @@
 package clases;
 
 public enum TipoDeConducion {
-	AGRESIVO, NORMAL, CAUTO;
+	AGRESIVO, NEUTRO, CAUTO;
 }

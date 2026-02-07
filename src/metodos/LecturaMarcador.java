@@ -20,9 +20,9 @@ public class LecturaMarcador {
 				while((linea=br.readLine()) != null) {
 					System.out.println(linea);
 				}
-				
-				fr.close();
 				br.close();
+				fr.close();
+				
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

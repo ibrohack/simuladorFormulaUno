@@ -9,6 +9,7 @@ public class Piloto extends Persona {
 
 	public Piloto() {
 		super();
+		this.tiempos = new TreeMap<String, LocalTime>();
 	}
 
 	public Piloto(String nombre, int numero) {

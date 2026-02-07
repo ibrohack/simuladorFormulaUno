@@ -41,7 +41,7 @@ public class Main {
 					GestionCircuitos.menuCircuitos(fichCircuitos);
 					break;
 				case 3:
-					GestionCarrera.simulacionCarrera(fichCircuitos, fichPilotos, fichEscuderia);
+					GestionCarrera.simulacionCarrera(fichCircuitos, fichPilotos, fichMarcador);
 					break;
 				case 4:
 					LecturaMarcador.leerMarcador(fichMarcador);

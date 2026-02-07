@@ -3,6 +3,8 @@ package metodos;
 import java.io.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import clases.*;
@@ -13,28 +15,30 @@ public class GestionCarrera {
 
 	public static void simulacionCarrera(File fichCircuito, File fichPilotos, File fichMarcador ) {
 		Carrera carrera = new Carrera();
-		float gasolina;
-		int tiempoCambioNeumaticos, tiempoRepostar;
 		int opciones;
 		Mecanico mecanico = null;
-		ArrayList<Piloto> pilotos = new ArrayList<Piloto>();
+		ArrayList <String> pilotosFuera = new ArrayList <String>();
+		HashMap<String, Piloto> pilotos = new HashMap<String, Piloto>();
 		Circuito circuito = elgirCircuito(fichCircuito);
 		carrera.setCircuitoCarrera(circuito);
 		carrera.setCodigoCarrera();
-		cargarPilotos(pilotos, fichPilotos);
+		pilotos = cargarPilotos(pilotos, fichPilotos);
+
 		if(fichCircuito.exists() && fichPilotos.exists()) {
 			for(int i=0; i<=circuito.getNumeroVuletas(); i++) {
 				if(i==0) {
-					for(Piloto piloto: pilotos) {
-						System.out.println("***********Selecion de la configuracion inicial**********");
+					for(Piloto piloto: pilotos.values()) {
+						System.out.println("**********************Selecion de la configuracion inicial de "+ piloto.getNombre() +"**********************");
 						PlanDeCarrera planDeCarrera = new PlanDeCarrera();
 						planDeCarrera.setPiloto(piloto);
-						planDeCarrera.getCarera().setCircuitoCarrera(circuito);
+						mecanico = cargarMecanico(planDeCarrera);
+						planDeCarrera.setMecanico(mecanico);
+						planDeCarrera.setCarera(carrera);;
 						GestionPlanDeCarrera.cambiarRuedas(planDeCarrera);
 						GestionPlanDeCarrera.repostar(planDeCarrera);
 						GestionPlanDeCarrera.cambiarTipoDeConducion(planDeCarrera);
 						System.out.println("¿Cuantas vueltas quieres dar con esta configuracion? (El maxima numero de vueltas son " + carrera.getCircuitoCarrera().getNumeroVuletas() +")");
-						planDeCarrera.setVueltasParaPit(carrera.getCircuitoCarrera().getNumeroVuletas());
+						planDeCarrera.setVueltasParaPit(Utilidades.leerInt(1, carrera.getCircuitoCarrera().getNumeroVuletas()));
 						GestionPlanDeCarrera.velocidadMaxima(planDeCarrera);
 						GestionPlanDeCarrera.probabilidaChoque(planDeCarrera);
 						mecanico = cargarMecanico(planDeCarrera);
@@ -43,47 +47,65 @@ public class GestionCarrera {
 						System.out.println("Configuracion inicial selecionada con exito.");
 					}
 				}else {
-					for(PlanDeCarrera p: carrera.getCoches().values()) {
-						try {
-							calcularChoque(p);
-							GestionPlanDeCarrera.desgaste(p);
-							GestionPlanDeCarrera.consumoDeGasolina(p);
-							GestionPlanDeCarrera.velocidadMaxima(p);
-							GestionPlanDeCarrera.probabilidaChoque(p);
-							GestionPlanDeCarrera.calcularTiempoVuelta(p);
-							if(i== p.getVueltasParaPit()) {
+					for(PlanDeCarrera planDeCarrera: carrera.getCoches().values()) {
+						if(!pilotosFuera.contains(planDeCarrera.getPiloto().getCodigo())) {
+							try {
+								calcularChoque(planDeCarrera);
+							} catch (AbandonoException e) {
+								System.out.println(e.getMessage());
+								pilotosFuera.add(planDeCarrera.getPiloto().getCodigo());
+							}
+							try {
+								GestionPlanDeCarrera.desgaste(planDeCarrera);
+							} catch (AbandonoException e) {
+								System.out.println(e.getMessage());
+								pilotosFuera.add(planDeCarrera.getPiloto().getCodigo());
+							}
+							try {
+								GestionPlanDeCarrera.consumoDeGasolina(planDeCarrera);
+							} catch (AbandonoException e) {
+								System.out.println(e.getMessage());
+								pilotosFuera.add(planDeCarrera.getPiloto().getCodigo());
+							}
+							GestionPlanDeCarrera.velocidadMaxima(planDeCarrera);
+							GestionPlanDeCarrera.probabilidaChoque(planDeCarrera);
+							GestionPlanDeCarrera.calcularTiempoVuelta(planDeCarrera);
+							if(i== planDeCarrera.getVueltasParaPit() && !pilotosFuera.contains(planDeCarrera.getPiloto().getCodigo()) && planDeCarrera.getVueltasParaPit()<planDeCarrera.getCarera().getCircuitoCarrera().getNumeroVuletas()) {
+								System.out.println(String.format("El piloto %s esta entrando al pit", planDeCarrera.getPiloto().getNombre()));
 								System.out.println(String.format("Tienes %f litoros de gasolina restantes en el deposito.\n"
-										+ "El desgaste de los neumaticos es %f%%", p.getLitrosGasolina(), p.getDesgaste()*100));
-								opciones = menu();
+										+ "El desgaste de los neumaticos es %f%%", planDeCarrera.getLitrosGasolina(), planDeCarrera.getDesgaste()*100));
 								do {
+									opciones = menu();
 									switch(opciones) {
 									case 0:
+										System.out.println("¿Cuantas vueltas quieres dar con esta configuracion? (El maxima numero de vueltas son " + (carrera.getCircuitoCarrera().getNumeroVuletas()- i) +")");
+										planDeCarrera.setVueltasParaPit(i+Utilidades.leerInt(1, carrera.getCircuitoCarrera().getNumeroVuletas()-i));
+
 										System.out.println("Reanudando carrera...");
 										break;
 
 									case 1:
-										GestionPlanDeCarrera.repostar(p);
-
+										GestionPlanDeCarrera.repostar(planDeCarrera);
 										break;
 
 									case 2:
-										GestionPlanDeCarrera.cambiarRuedas(p);
+										GestionPlanDeCarrera.cambiarRuedas(planDeCarrera);
 										break;
 
 									case 3:
-										GestionPlanDeCarrera.cambiarTipoDeConducion(p);
+										GestionPlanDeCarrera.cambiarTipoDeConducion(planDeCarrera);
 										break;
 									}
 								}while(opciones != 0);
 							}
-						} catch (AbandonoException e) {
-							System.out.println(e.getMessage());
-							carrera.getCoches().remove(p.getPiloto().getCodigo());
 						}
 					}
+
 				}
 			}
-			escribirGanador(fichPilotos, carrera, fichMarcador);
+			actualizarPilotos(fichPilotos, pilotos);
+			escribirGanador(fichPilotos, carrera, fichMarcador, pilotosFuera);
+			System.out.println("Carrera finalizada");
 		}else {
 			System.out.println("No hay pilotos o circuitos");
 		}
@@ -91,6 +113,7 @@ public class GestionCarrera {
 
 	public static int menu() {
 		int opcion;
+
 		System.out.println("Que quieres hacer en el pit.\n"
 				+ "0.	Salir\n"
 				+ "1.	Repostar.\n"
@@ -100,16 +123,31 @@ public class GestionCarrera {
 		return opcion;
 	}
 
+	public static void actualizarPilotos(File fichPilotos, HashMap<String, Piloto> pilotos) {
+		ObjectOutputStream oos;
+		try {
+			oos = new ObjectOutputStream(new FileOutputStream(fichPilotos));
+			oos.writeObject(pilotos);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	@SuppressWarnings("unchecked")
-	public static Circuito elgirCircuito(File fichC) {
+	public static Circuito elgirCircuito(File fichCircuitos) {
 		String nombreCircuito;
 		Circuito circuito = null;
 		boolean finArchivo=false, encontrado=false;
 		ArrayList<Circuito> circuitos = null;
 		ObjectInputStream ois;
-		if(fichC.exists()) {
+		if(fichCircuitos.exists()) {
 			try {
-				ois = new ObjectInputStream(new FileInputStream(fichC));
+				ois = new ObjectInputStream(new FileInputStream(fichCircuitos));
 				while(!finArchivo) {
 					try {
 						Object obj = ois.readObject();
@@ -155,7 +193,7 @@ public class GestionCarrera {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static ArrayList<Piloto> cargarPilotos(ArrayList<Piloto> pilotos, File fichP) {
+	public static HashMap<String, Piloto> cargarPilotos(HashMap<String, Piloto> pilotos, File fichP) {
 		ObjectInputStream ois;
 		boolean finArchivo=false;
 		if(fichP.exists()) {
@@ -164,8 +202,8 @@ public class GestionCarrera {
 				while(!finArchivo) {
 					try {
 						Object obj = ois.readObject();
-						if(obj instanceof ArrayList) {
-							pilotos = (ArrayList<Piloto>) obj;
+						if(obj instanceof Map) {
+							pilotos = (HashMap<String, Piloto>) obj;
 						}
 					}catch(EOFException e) {
 						finArchivo=true;
@@ -187,7 +225,7 @@ public class GestionCarrera {
 		return pilotos;
 	}
 
-	
+
 	public static Mecanico cargarMecanico(PlanDeCarrera planDeCarrera) {
 		Mecanico mecanico = planDeCarrera.getPiloto().getEscuderia().getMecanico();		
 		return mecanico;
@@ -195,38 +233,41 @@ public class GestionCarrera {
 
 	public static void calcularChoque(PlanDeCarrera planDeCarrera) throws AbandonoException {
 		Random r = new Random();
-		if(r.nextDouble()<planDeCarrera.getProbChoque()) {
-			throw new AbandonoException(String.format("El piloto %s se ha chocado", planDeCarrera.getPiloto().getNombre()));
+		if(r.nextDouble()<=planDeCarrera.getProbChoque()) {
+			throw new AbandonoException(String.format("El piloto %s se ha chocado y no puede continuar en la carrera", planDeCarrera.getPiloto().getNombre()));
 		}
 	}
 
-	public static void escribirGanador(File fichP, Carrera c, File fichMarcador) {
+	public static void escribirGanador(File fichP, Carrera c, File fichMarcador, ArrayList<String> pilotosFuera) {
 		FileWriter fw = null;
 		BufferedWriter bw = null;
-		ArrayList<Piloto> pilotos = new ArrayList<Piloto>();
-		Piloto piloto = new Piloto();
+		HashMap<String, Piloto> pilotos = new HashMap<String, Piloto>();
+		Piloto piloto = null;
 		LocalTime tmax = LocalTime.of(10, 0, 0);
 		pilotos = cargarPilotos(pilotos, fichP);
-		for(Piloto p: pilotos) {
+		for(Piloto p: pilotos.values()) {
 			for(String codigoCarrera: p.getTiempos().keySet()) {
-				if(codigoCarrera.equalsIgnoreCase(c.getCodigoCarrera()) && p.getTiempos().get(p).isAfter(tmax)) {
+				if(codigoCarrera.equalsIgnoreCase(c.getCodigoCarrera()) && p.getTiempos().get(codigoCarrera).isBefore(tmax) && !pilotosFuera.contains(p.getCodigo())) {
 					tmax = p.getTiempos().get(codigoCarrera);
 					piloto = p;
 				}
 			}
 		}
-		try {
-			fw = new FileWriter(fichMarcador);
-			bw = new BufferedWriter(fw);
+		if(piloto!=null){
+			try {
+				fw = new FileWriter(fichMarcador, true);
+				bw = new BufferedWriter(fw);
+				bw.write(String.format("El ganador de la carrera %s es %s con un tiempo de %s", c.getCodigoCarrera(), piloto.getNombre(), piloto.getTiempos().get(c.getCodigoCarrera()) ));
+				bw.newLine();
 
-			bw.write(String.format("El ganador de la carrera %s es %s con un tiempo de %s", c.getCodigoCarrera(), piloto.getNombre(), piloto.getTiempos().get(c.getCodigoCarrera()) ));
-			bw.newLine();
-
-			bw.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				bw.close();
+				fw.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+
 	}
 }
 
