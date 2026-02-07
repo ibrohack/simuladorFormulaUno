@@ -8,6 +8,8 @@ import java.util.Map;
 
 import clases.Mecanico;
 import clases.Escuderia;
+import excepciones.ElementoNoEncontradoException;
+import excepciones.OperacionCanceladaException;
 import utilidades.Utilidades;
 import java.util.ArrayList;
 
@@ -21,26 +23,32 @@ public class GestionMecanicos {
         int opcion;
         do {
             mostrarMenu();
-            opcion = Utilidades.leerInt("Seleccione una opción: ", 0, 4);
-            switch (opcion) {
-                case 1:
-                    introducirMecanico(mecanicos);
-                    break;
-                case 2:
-                    modificarMecanico(mecanicos);
-                    break;
-                case 3:
-                    eliminarMecanico(mecanicos);
-                    break;
-                case 4:
-                    mostrarMecanicos(mecanicos);
-                    break;
-                case 5:
-                    verInformacionMecanico(mecanicos);
-                    break;
-                case 0:
-                    System.out.println("Fin del programa.");
-                    break;
+            opcion = Utilidades.leerInt("Seleccione una opción: ", 0, 5);
+            try {
+                switch (opcion) {
+                    case 1:
+                        introducirMecanico(mecanicos);
+                        break;
+                    case 2:
+                        modificarMecanico(mecanicos);
+                        break;
+                    case 3:
+                        eliminarMecanico(mecanicos);
+                        break;
+                    case 4:
+                        mostrarMecanicos(mecanicos);
+                        break;
+                    case 5:
+                        verInformacionMecanico(mecanicos);
+                        break;
+                    case 0:
+                        System.out.println("Fin del programa.");
+                        break;
+                }
+            } catch (ElementoNoEncontradoException e) {
+                System.out.println("Error: " + e.getMessage());
+            } catch (OperacionCanceladaException e) {
+                System.out.println("Operación cancelada: " + e.getMessage());
             }
             guardarDatos(mecanicos);
         } while (opcion != 0);
@@ -75,52 +83,52 @@ public class GestionMecanicos {
         } while (continuar == 'S');
     }
 
-    private static void modificarMecanico(Map<String, Mecanico> mecanicos) {
+    private static void modificarMecanico(Map<String, Mecanico> mecanicos) throws ElementoNoEncontradoException {
         System.out.println("\n===== MODIFICAR MECANICO =====");
         System.out.println("Introduce el Codigo de mecanico a modificar:");
         String codigo = Utilidades.introducirCadena();
 
-        if (mecanicos.containsKey(codigo)) {
-            Mecanico mecanico = mecanicos.get(codigo);
-            System.out.println("Datos actuales del mecanico: " + mecanico);
-
-            System.out.println("Introduce el nuevo Nombre del Mecanico:");
-            String nuevoNombre = Utilidades.introducirCadena();
-
-            mecanico.setNombre(nuevoNombre);
-            System.out.println("Mecanico modificado correctamente.");
-        } else {
-            System.out.println("Error: No existe ningún mecanico con el código " + codigo);
+        if (!mecanicos.containsKey(codigo)) {
+            throw new ElementoNoEncontradoException("No existe ningún mecanico con el código " + codigo);
         }
+
+        Mecanico mecanico = mecanicos.get(codigo);
+        System.out.println("Datos actuales del mecanico: " + mecanico);
+
+        System.out.println("Introduce el nuevo Nombre del Mecanico:");
+        String nuevoNombre = Utilidades.introducirCadena();
+
+        mecanico.setNombre(nuevoNombre);
+        System.out.println("Mecanico modificado correctamente.");
     }
 
-    private static void eliminarMecanico(Map<String, Mecanico> mecanicos) {
+    private static void eliminarMecanico(Map<String, Mecanico> mecanicos)
+            throws ElementoNoEncontradoException, OperacionCanceladaException {
         System.out.println("\n===== ELIMINAR MECANICO =====");
         System.out.println("Introduce el Codigo de mecanico a eliminar:");
         String codigo = Utilidades.introducirCadena();
 
-        if (mecanicos.containsKey(codigo)) {
-            System.out.println(
-                    "¿Está seguro de que desea eliminar al mecanico " + mecanicos.get(codigo).getNombre() + "?");
-            if (Utilidades.leerBoolean()) {
-                mecanicos.remove(codigo);
-                System.out.println("Mecanico eliminado correctamente.");
-            } else {
-                System.out.println("Eliminación cancelada.");
-            }
-        } else {
-            System.out.println("Error: No existe ningún mecanico con el código " + codigo);
+        if (!mecanicos.containsKey(codigo)) {
+            throw new ElementoNoEncontradoException("No existe ningún mecanico con el código " + codigo);
         }
+
+        System.out.println(
+                "¿Está seguro de que desea eliminar al mecanico " + mecanicos.get(codigo).getNombre() + "?");
+        if (!Utilidades.leerBoolean()) {
+            throw new OperacionCanceladaException("El usuario canceló la eliminación del mecánico.");
+        }
+
+        mecanicos.remove(codigo);
+        System.out.println("Mecanico eliminado correctamente.");
     }
 
-    private static void mostrarMecanicos(Map<String, Mecanico> mecanicos) {
+    private static void mostrarMecanicos(Map<String, Mecanico> mecanicos) throws ElementoNoEncontradoException {
         System.out.println("\n===== LISTA DE MECANICOS =====");
         if (mecanicos.isEmpty()) {
-            System.out.println("No hay mecanicos registrados.");
-        } else {
-            for (Mecanico mecanico : mecanicos.values()) {
-                mecanico.visualizar();
-            }
+            throw new ElementoNoEncontradoException("No hay mecanicos registrados.");
+        }
+        for (Mecanico mecanico : mecanicos.values()) {
+            mecanico.visualizar();
         }
     }
 
@@ -157,71 +165,71 @@ public class GestionMecanicos {
         }
     }
 
-    private static void verInformacionMecanico(Map<String, Mecanico> mecanicos) {
+    private static void verInformacionMecanico(Map<String, Mecanico> mecanicos) throws ElementoNoEncontradoException {
         System.out.println("\n===== VER INFORMACIÓN DE MECANICO =====");
         System.out.println("Introduce el Codigo de mecanico:");
         String codigo = Utilidades.introducirCadena();
 
-        if (mecanicos.containsKey(codigo)) {
-            Mecanico mecanico = mecanicos.get(codigo);
-            mecanico.visualizar();
+        if (!mecanicos.containsKey(codigo)) {
+            throw new ElementoNoEncontradoException("No existe ningún mecanico con el código " + codigo);
+        }
 
-            System.out.println("¿Desea agregar el mecanico a una escudería? (S/N):");
-            if (Utilidades.leerChar('S', 'N') == 'S') {
-                File ficheroEscuderias = new File("escuderias.dat");
-                ArrayList<Escuderia> escuderias = new ArrayList<>();
-                escuderias = CargarDatos.cargarEscuderia(ficheroEscuderias);
+        Mecanico mecanico = mecanicos.get(codigo);
+        mecanico.visualizar();
 
-                boolean alreadyAssigned = false;
-                for (int i = 0; i < escuderias.size() && !alreadyAssigned; i++) {
-                    Escuderia e = escuderias.get(i);
-                    if (e.getMecanico() != null && e.getMecanico().getCodigo().equals(mecanico.getCodigo())) {
-                        System.out.println("Error: El mecánico ya pertenece a la escudería " + e.getNombreEscuderia());
-                        alreadyAssigned = true;
-                    }
-                }
+        System.out.println("¿Desea agregar el mecanico a una escudería? (S/N):");
+        if (Utilidades.leerChar('S', 'N') == 'S') {
+            File ficheroEscuderias = new File("escuderias.dat");
+            ArrayList<Escuderia> escuderias = new ArrayList<>();
+            escuderias = CargarDatos.cargarEscuderia(ficheroEscuderias);
 
-                if (!alreadyAssigned) {
-                    GestionEscuderia.mostrarEscuderia(escuderias);
-
-                    System.out.println("Introduce el Código de la Escudería:");
-                    String codigoEscuderia = Utilidades.introducirCadena();
-
-                    Escuderia escuderiaSeleccionada = null;
-                    boolean found = false;
-                    for (int i = 0; i < escuderias.size() && !found; i++) {
-                        Escuderia e = escuderias.get(i);
-                        if (e.getCodigoEscuderia().equalsIgnoreCase(codigoEscuderia)) {
-                            escuderiaSeleccionada = e;
-                            found = true;
-                        }
-                    }
-
-                    if (escuderiaSeleccionada != null) {
-                        boolean overwrite = true;
-                        if (escuderiaSeleccionada.getMecanico() != null) {
-                            System.out.println("La escudería ya tiene un mecánico asignado: "
-                                    + escuderiaSeleccionada.getMecanico().getNombre());
-                            System.out.println("¿Desea sobrescribirlo? (S/N):");
-                            if (Utilidades.leerChar('S', 'N') == 'N') {
-                                overwrite = false;
-                                System.out.println("Asignación cancelada.");
-                            }
-                        }
-
-                        if (overwrite) {
-                            escuderiaSeleccionada.setMecanico(mecanico);
-                            GestionEscuderia.guardarEscuderia(ficheroEscuderias, escuderias);
-                            System.out.println("Mecánico asignado correctamente a la escudería "
-                                    + escuderiaSeleccionada.getNombreEscuderia());
-                        }
-                    } else {
-                        System.out.println("Error: No se encontró una escudería con ese código.");
-                    }
+            boolean alreadyAssigned = false;
+            for (int i = 0; i < escuderias.size() && !alreadyAssigned; i++) {
+                Escuderia e = escuderias.get(i);
+                if (e.getMecanico() != null && e.getMecanico().getCodigo().equals(mecanico.getCodigo())) {
+                    System.out.println("Error: El mecánico ya pertenece a la escudería " + e.getNombreEscuderia());
+                    alreadyAssigned = true;
                 }
             }
-        } else {
-            System.out.println("Error: No existe ningún mecanico con el código " + codigo);
+
+            if (!alreadyAssigned) {
+                GestionEscuderia.mostrarEscuderia(escuderias);
+
+                System.out.println("Introduce el Código de la Escudería:");
+                String codigoEscuderia = Utilidades.introducirCadena();
+
+                Escuderia escuderiaSeleccionada = null;
+                boolean found = false;
+                for (int i = 0; i < escuderias.size() && !found; i++) {
+                    Escuderia e = escuderias.get(i);
+                    if (e.getCodigoEscuderia().equalsIgnoreCase(codigoEscuderia)) {
+                        escuderiaSeleccionada = e;
+                        found = true;
+                    }
+                }
+
+                if (escuderiaSeleccionada != null) {
+                    boolean overwrite = true;
+                    if (escuderiaSeleccionada.getMecanico() != null) {
+                        System.out.println("La escudería ya tiene un mecánico asignado: "
+                                + escuderiaSeleccionada.getMecanico().getNombre());
+                        System.out.println("¿Desea sobrescribirlo? (S/N):");
+                        if (Utilidades.leerChar('S', 'N') == 'N') {
+                            overwrite = false;
+                            System.out.println("Asignación cancelada.");
+                        }
+                    }
+
+                    if (overwrite) {
+                        escuderiaSeleccionada.setMecanico(mecanico);
+                        GestionEscuderia.guardarEscuderia(ficheroEscuderias, escuderias);
+                        System.out.println("Mecánico asignado correctamente a la escudería "
+                                + escuderiaSeleccionada.getNombreEscuderia());
+                    }
+                } else {
+                    System.out.println("Error: No se encontró una escudería con ese código.");
+                }
+            }
         }
     }
 }
