@@ -29,7 +29,7 @@ public class GestionCarrera {
 			for(int i=0; i<=circuito.getNumeroVuletas(); i++) {
 				if(i==0) {
 					for(Piloto piloto: pilotos.values()) {
-						System.out.println("\n**********************Seleción de la configuración inicial de "+ piloto.getNombre() +"**********************");
+						System.out.println("\n***** CONFIGURACIÓN INICIAL DE " + piloto.getNombre() + " *****");
 						PlanDeCarrera planDeCarrera = new PlanDeCarrera();
 						planDeCarrera.setPiloto(piloto);
 						mecanico = cargarMecanico(planDeCarrera);
@@ -72,8 +72,8 @@ public class GestionCarrera {
 							GestionPlanDeCarrera.probabilidaChoque(planDeCarrera);
 							GestionPlanDeCarrera.calcularTiempoVuelta(planDeCarrera);
 							if(i == planDeCarrera.getVueltasParaPit() && !pilotosFuera.contains(planDeCarrera.getPiloto().getCodigo()) && planDeCarrera.getVueltasParaPit()<planDeCarrera.getCarera().getCircuitoCarrera().getNumeroVuletas()) {
-								System.out.println(String.format("\n--- El piloto %s esta entrando al pit ---", planDeCarrera.getPiloto().getNombre()));
-								System.out.println(String.format("Tienes %f litros de gasolina restantes en el depósito.\n"
+								System.out.println(String.format("\n----→ El piloto %s esta entrando al pit ←----", planDeCarrera.getPiloto().getNombre()));
+								System.out.println(String.format("\nTienes %f litros de gasolina restantes en el depósito.\n"
 										+ "El desgaste de los neumáticos es %f%%.", planDeCarrera.getLitrosGasolina(), planDeCarrera.getDesgaste()*100));
 								cambiosHechos=false;
 								do {
@@ -122,7 +122,7 @@ public class GestionCarrera {
 	public static int menu() {
 		int opcion;
 
-		System.out.println("¿Que quieres hacer en el pit?\n"
+		System.out.println("\n¿Que quieres hacer en el pit?\n"
 				+ "0.- Salir\n"
 				+ "1.- Repostar.\n"
 				+ "2.- Cambiar de neumáticos.\n"
@@ -177,7 +177,7 @@ public class GestionCarrera {
 				e.printStackTrace();
 			}
 			do {
-				System.out.println("Elige uno de los siguientes circuitos.");
+				System.out.println("\n---- SELECCIÓN DE CIRCUITOS -----");
 				for(Circuito cr: circuitos) {
 					System.out.println(String.format("Circuito %s número de vueltas %d", cr.getNombreCircuito(), cr.getNumeroVuletas()));
 				}
