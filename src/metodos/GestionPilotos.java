@@ -117,7 +117,7 @@ public class GestionPilotos {
 			System.out.println("No hay pilotos registrados.");
 		} else {
 			for (Piloto piloto : pilotos.values()) {
-				System.out.println(piloto);
+				piloto.visualizar();
 			}
 		}
 	}
@@ -162,7 +162,7 @@ public class GestionPilotos {
 
 		if (pilotos.containsKey(codigo)) {
 			Piloto piloto = pilotos.get(codigo);
-			System.out.println(piloto);
+			piloto.visualizar();
 
 			System.out.println("¿Desea agregar el piloto a una escudería? (S/N):");
 			if (Utilidades.leerChar('S', 'N') == 'S') {

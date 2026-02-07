@@ -7,6 +7,8 @@ public abstract class Persona implements Serializable {
 	protected String codigo;
 	protected String nombre;
 
+	public abstract void visualizar();
+
 	public Persona(String nombre, int numero, String prefijo) {
 		super();
 		this.nombre = nombre;

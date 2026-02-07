@@ -119,7 +119,7 @@ public class GestionMecanicos {
             System.out.println("No hay mecanicos registrados.");
         } else {
             for (Mecanico mecanico : mecanicos.values()) {
-                System.out.println(mecanico);
+                mecanico.visualizar();
             }
         }
     }
@@ -164,7 +164,7 @@ public class GestionMecanicos {
 
         if (mecanicos.containsKey(codigo)) {
             Mecanico mecanico = mecanicos.get(codigo);
-            System.out.println(mecanico);
+            mecanico.visualizar();
 
             System.out.println("¿Desea agregar el mecanico a una escudería? (S/N):");
             if (Utilidades.leerChar('S', 'N') == 'S') {

@@ -51,4 +51,14 @@ public class Mecanico extends Persona {
 		return "Mecanico [factorRepostaje=" + factorRepostaje + ", factorCambioNeumaticos="
 				+ factorCambioNeumaticos + ", puntos=" + puntos + ", codigo=" + codigo + ", nombre=" + nombre + "]";
 	}
+
+	@Override
+	public void visualizar() {
+		System.out.println("Mecanico: " + this.nombre);
+		System.out.println("Codigo: " + this.codigo);
+		System.out.println("Factor Repostaje: " + this.factorRepostaje);
+		System.out.println("Factor Cambio Neumaticos: " + this.factorCambioNeumaticos);
+		System.out.println("Puntos de habilidad: " + this.puntos);
+
+	}
 }
