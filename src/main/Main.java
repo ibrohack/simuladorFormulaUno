@@ -60,7 +60,7 @@ public class Main {
 		File fichPilotos = new File("pilotos.dat");
 		File fichMecanicos = new File("mecanicos.dat");
 
-		if (!fichEscuderia.exists() && fichPilotos.exists() && fichCircuitos.exists()) {
+		if (!fichEscuderia.exists() && !fichPilotos.exists() && !fichCircuitos.exists()) {
 			// 1. Crear Circuitos
 			ArrayList<Circuito> circuitos = new ArrayList<>();
 			circuitos.add(new Circuito("001", "Bahrain International Circuit", 57, 5412));
