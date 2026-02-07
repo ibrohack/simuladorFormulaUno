@@ -15,7 +15,7 @@ public class GestionPlanDeCarrera {
 		int tiempoCambioNeumaticos;
 		TipoRueda tipo=null;
 		do {
-			System.out.println("Introduce el tipo de rueda que quieres poner (Blando,Medio,Duro o Lluvia)");
+			System.out.println("Introduce el tipo de rueda que quieres poner: (Blando, Medio, Duro o Lluvia)");
 			tipoRueda = Utilidades.introducirCadena().toUpperCase();
 			tipoCorrecto = true;
 			try{
@@ -38,7 +38,7 @@ public class GestionPlanDeCarrera {
 	public static void repostar(PlanDeCarrera planDeCarrera) {
 		float gasolina;
 		int tiempoRepostar;
-		System.out.println(String.format("¿Cuantos litors de gasolina quieres repostar(Maximo %fL)?", 110-planDeCarrera.getLitrosGasolina()));
+		System.out.println(String.format("¿Cuántos litros de gasolina quieres repostar? (Maximo %fL)", 110-planDeCarrera.getLitrosGasolina()));
 		gasolina=Utilidades.leerFloat(1, 110-planDeCarrera.getLitrosGasolina());
 		planDeCarrera.setLitrosGasolina(gasolina+planDeCarrera.getLitrosGasolina());
 		tiempoRepostar= (int) (12*gasolina*planDeCarrera.getMecanico().getFactorRepostaje());
@@ -62,7 +62,7 @@ public class GestionPlanDeCarrera {
 
 		planDeCarrera.setDesgaste(planDeCarrera.getDesgaste()+desgaste/100);
 		if(planDeCarrera.getDesgaste()<=0) {
-			throw new AbandonoException(String.format("Se han roto los neumaticos del piloto %s y no puede continuar", planDeCarrera.getPiloto().getNombre()));
+			throw new AbandonoException(String.format("Se han roto los neumáticos del piloto %s y no puede continuar.", planDeCarrera.getPiloto().getNombre()));
 		}
 
 	}
@@ -116,7 +116,7 @@ public class GestionPlanDeCarrera {
 		}
 		planDeCarrera.setLitrosGasolina(planDeCarrera.getLitrosGasolina()-consumo/410);
 		if(planDeCarrera.getLitrosGasolina()<=0) {
-			throw new AbandonoException(String.format("El piloto %s se ha quedado sin gasolina y ha tenido que abandonar la carrera", planDeCarrera.getPiloto().getNombre()));
+			throw new AbandonoException(String.format("El piloto %s se ha quedado sin gasolina y ha tenido que abandonar la carrera.", planDeCarrera.getPiloto().getNombre()));
 		}
 	}
 
@@ -129,18 +129,18 @@ public class GestionPlanDeCarrera {
 		String tipoConducion;
 		TipoDeConducion tipo=null;
 		do {
-			System.out.println("Introduce el tipo de conducion que quieres usar (Agresivo, Neutro o Cauto)");
+			System.out.println("Introduce el tipo de condución que quieres usar: (Agresivo, Neutro o Cauto)");
 			tipoConducion = Utilidades.introducirCadena().toUpperCase();
 			tipoCorrecto = true;
 			try{
 				tipo = TipoDeConducion.valueOf(tipoConducion);
 			}catch(IllegalArgumentException e) {
-				System.out.println("El tipo de conducion introducido no existe.\nIntentalo de nuevo.");
+				System.out.println("El tipo de condución introducido no existe.\nIntentalo de nuevo.");
 				tipoCorrecto = false;
 			}
 		}while(!tipoCorrecto);
 		if(planDeCarrera.getPiloto().getTiempos().containsKey(planDeCarrera.getPiloto().getCodigo())) {
-			System.out.println("Tipo de conducion actualizad con exito");
+			System.out.println("Tipo de condución actualizado con éxito.");
 		}
 		planDeCarrera.setTipoDeConducion(tipo);
 		planDeCarrera.setDesgaste(0);
@@ -159,8 +159,5 @@ public class GestionPlanDeCarrera {
 		}else {
 			planDeCarrera.getPiloto().getTiempos().put(planDeCarrera.getCarera().getCodigoCarrera(), tiempo);
 		}
-
 	}
 }
-
-

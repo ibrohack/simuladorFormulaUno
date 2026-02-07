@@ -16,11 +16,11 @@ public class GestionCarrera {
 	public static void simulacionCarrera(File fichCircuito, File fichPilotos, File fichMarcador ) {
 		Carrera carrera = new Carrera();
 		int opciones;
-		boolean cambiosEchos=false;
+		boolean cambiosHechos=false;
 		Mecanico mecanico = null;
 		ArrayList <String> pilotosFuera = new ArrayList <String>();
 		HashMap<String, Piloto> pilotos = new HashMap<String, Piloto>();
-		Circuito circuito = elgirCircuito(fichCircuito);
+		Circuito circuito = elegirCircuito(fichCircuito);
 		carrera.setCircuitoCarrera(circuito);
 		carrera.setCodigoCarrera();
 		pilotos = cargarPilotos(pilotos, fichPilotos);
@@ -29,7 +29,7 @@ public class GestionCarrera {
 			for(int i=0; i<=circuito.getNumeroVuletas(); i++) {
 				if(i==0) {
 					for(Piloto piloto: pilotos.values()) {
-						System.out.println("**********************Selecion de la configuracion inicial de "+ piloto.getNombre() +"**********************");
+						System.out.println("\n**********************Seleción de la configuración inicial de "+ piloto.getNombre() +"**********************");
 						PlanDeCarrera planDeCarrera = new PlanDeCarrera();
 						planDeCarrera.setPiloto(piloto);
 						mecanico = cargarMecanico(planDeCarrera);
@@ -38,14 +38,14 @@ public class GestionCarrera {
 						GestionPlanDeCarrera.cambiarRuedas(planDeCarrera);
 						GestionPlanDeCarrera.repostar(planDeCarrera);
 						GestionPlanDeCarrera.cambiarTipoDeConducion(planDeCarrera);
-						System.out.println("¿Cuantas vueltas quieres dar con esta configuracion? (El maxima numero de vueltas son " + carrera.getCircuitoCarrera().getNumeroVuletas()/2 +")");
+						System.out.println("¿Cuántas vueltas quieres dar con esta configuración? (El máximo número de vueltas son " + carrera.getCircuitoCarrera().getNumeroVuletas()/2 +")");
 						planDeCarrera.setVueltasParaPit(Utilidades.leerInt(1, carrera.getCircuitoCarrera().getNumeroVuletas()/2));
 						GestionPlanDeCarrera.velocidadMaxima(planDeCarrera);
 						GestionPlanDeCarrera.probabilidaChoque(planDeCarrera);
 						mecanico = cargarMecanico(planDeCarrera);
 						planDeCarrera.setMecanico(mecanico);
 						carrera.getCoches().put(piloto.getCodigo(), planDeCarrera);
-						System.out.println("Configuracion inicial selecionada con exito.");
+						System.out.println("Configuración inicial selecionada con éxito.");
 					}
 				}else {
 					for(PlanDeCarrera planDeCarrera: carrera.getCoches().values()) {
@@ -72,19 +72,18 @@ public class GestionCarrera {
 							GestionPlanDeCarrera.probabilidaChoque(planDeCarrera);
 							GestionPlanDeCarrera.calcularTiempoVuelta(planDeCarrera);
 							if(i == planDeCarrera.getVueltasParaPit() && !pilotosFuera.contains(planDeCarrera.getPiloto().getCodigo()) && planDeCarrera.getVueltasParaPit()<planDeCarrera.getCarera().getCircuitoCarrera().getNumeroVuletas()) {
-								System.out.println(String.format("El piloto %s esta entrando al pit", planDeCarrera.getPiloto().getNombre()));
-								System.out.println(String.format("Tienes %f litoros de gasolina restantes en el deposito.\n"
-										+ "El desgaste de los neumaticos es %f%%", planDeCarrera.getLitrosGasolina(), planDeCarrera.getDesgaste()*100));
-								cambiosEchos=false;
+								System.out.println(String.format("\n--- El piloto %s esta entrando al pit ---", planDeCarrera.getPiloto().getNombre()));
+								System.out.println(String.format("Tienes %f litros de gasolina restantes en el depósito.\n"
+										+ "El desgaste de los neumáticos es %f%%.", planDeCarrera.getLitrosGasolina(), planDeCarrera.getDesgaste()*100));
+								cambiosHechos=false;
 								do {
 									opciones = menu();
 									switch(opciones) {
 									case 0:
-										
-										if(!cambiosEchos) {
+										if(!cambiosHechos) {
 											System.out.println("No puedes salir del pit sin cambiar nada.");
 										}else {
-											System.out.println("¿Cuantas vueltas quieres dar con esta configuracion? (El maxima numero de vueltas son " + (carrera.getCircuitoCarrera().getNumeroVuletas()- i) +")");
+											System.out.println("¿Cuántas vueltas quieres dar con esta configuración? (El máximo número de vueltas son " + (carrera.getCircuitoCarrera().getNumeroVuletas()- i) +")");
 											planDeCarrera.setVueltasParaPit(i+Utilidades.leerInt(1, carrera.getCircuitoCarrera().getNumeroVuletas()-i));
 											System.out.println("Reanudando carrera...");
 										}
@@ -92,20 +91,20 @@ public class GestionCarrera {
 
 									case 1:
 										GestionPlanDeCarrera.repostar(planDeCarrera);
-										cambiosEchos=true;
+										cambiosHechos=true;
 										break;
 
 									case 2:
 										GestionPlanDeCarrera.cambiarRuedas(planDeCarrera);
-										cambiosEchos=true;
+										cambiosHechos=true;
 										break;
 
 									case 3:
 										GestionPlanDeCarrera.cambiarTipoDeConducion(planDeCarrera);
-										cambiosEchos=true;
+										cambiosHechos=true;
 										break;
 									}
-								}while(opciones != 0 || !cambiosEchos);
+								}while(opciones != 0 || !cambiosHechos);
 							}
 						}
 					}
@@ -114,20 +113,20 @@ public class GestionCarrera {
 			}
 			actualizarPilotos(fichPilotos, pilotos);
 			escribirGanador(fichPilotos, carrera, fichMarcador, pilotosFuera);
-			System.out.println("Carrera finalizada");
+			System.out.println("Carrera finalizada.");
 		}else {
-			System.out.println("No hay pilotos o circuitos");
+			System.out.println("No hay pilotos o circuitos.");
 		}
 	}
 
 	public static int menu() {
 		int opcion;
 
-		System.out.println("Que quieres hacer en el pit.\n"
-				+ "0.	Salir\n"
-				+ "1.	Repostar.\n"
-				+ "2.	Cambiar de neumaticos.\n"
-				+ "3.	Cambiar tipo de conducion.");
+		System.out.println("¿Que quieres hacer en el pit?\n"
+				+ "0.- Salir\n"
+				+ "1.- Repostar.\n"
+				+ "2.- Cambiar de neumáticos.\n"
+				+ "3.- Cambiar tipo de condución.");
 		opcion=Utilidades.leerInt(0, 3);
 		return opcion;
 	}
@@ -144,11 +143,10 @@ public class GestionCarrera {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	@SuppressWarnings("unchecked")
-	public static Circuito elgirCircuito(File fichCircuitos) {
+	public static Circuito elegirCircuito(File fichCircuitos) {
 		String nombreCircuito;
 		Circuito circuito = null;
 		boolean finArchivo=false, encontrado=false;
@@ -179,9 +177,9 @@ public class GestionCarrera {
 				e.printStackTrace();
 			}
 			do {
-				System.out.println("Eleige uno de los sigientes circuitos");
+				System.out.println("Elige uno de los siguientes circuitos.");
 				for(Circuito cr: circuitos) {
-					System.out.println(String.format("Circuito %s numero de vueltas %d", cr.getNombreCircuito(), cr.getNumeroVuletas()));
+					System.out.println(String.format("Circuito %s número de vueltas %d", cr.getNombreCircuito(), cr.getNumeroVuletas()));
 				}
 				nombreCircuito = Utilidades.introducirCadena();
 				for(int i=0; i<circuitos.size() && !encontrado; i++) {
@@ -196,7 +194,7 @@ public class GestionCarrera {
 
 			}while(!encontrado);
 		}else {
-			System.out.println("No hay circuitos");
+			System.out.println("No hay circuitos.");
 		}
 		return circuito;
 	}
@@ -229,7 +227,6 @@ public class GestionCarrera {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 		return pilotos;
 	}
@@ -243,7 +240,7 @@ public class GestionCarrera {
 	public static void calcularChoque(PlanDeCarrera planDeCarrera) throws AbandonoException {
 		Random r = new Random();
 		if(r.nextDouble()<=planDeCarrera.getProbChoque()) {
-			throw new AbandonoException(String.format("El piloto %s se ha chocado y no puede continuar en la carrera", planDeCarrera.getPiloto().getNombre()));
+			throw new AbandonoException(String.format("El piloto %s se ha chocado y no puede continuar en la carrera.", planDeCarrera.getPiloto().getNombre()));
 		}
 	}
 
@@ -276,8 +273,5 @@ public class GestionCarrera {
 				e.printStackTrace();
 			}
 		}
-
 	}
 }
-
-

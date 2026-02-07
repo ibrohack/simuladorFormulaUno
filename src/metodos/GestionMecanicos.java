@@ -55,61 +55,60 @@ public class GestionMecanicos {
     }
 
     private static void mostrarMenu() {
-        System.out.println("\n===== GESTIÓN DE MECANICOS =====");
-        System.out.println("1. Introducir un nuevo Mecanico");
-        System.out.println("2. Modificar Mecanico");
-        System.out.println("3. Eliminar Mecanico");
-        System.out.println("4. Mostrar Mecanicos");
-        System.out.println("5. Ver información de Mecánico y Asignar a Escudería");
-
-        System.out.println("0. Salir");
+        System.out.println("\n===== GESTIÓN DE MECÁNICOS =====");
+        System.out.println("1.- Introducir un nuevo Mecánico");
+        System.out.println("2.- Modificar Mecánico");
+        System.out.println("3.- Eliminar Mecánico");
+        System.out.println("4.- Mostrar Mecánicos");
+        System.out.println("5.- Ver información de Mecánico y Asignar a Escudería");
+        System.out.println("0.- Salir");
     }
 
     private static void introducirMecanico(Map<String, Mecanico> mecanicos) {
         char continuar;
         do {
-            System.out.println("\n===== ALTA DE MECANICO =====");
-            System.out.println("Introduce el Nombre del Mecanico:");
+            System.out.println("\n===== ALTA DE MECÁNICO =====");
+            System.out.println("Introduce el Nombre del Mecánico:");
             String nombre = Utilidades.introducirCadena();
 
             int numero = calcularSiguienteNumero(mecanicos);
             Mecanico nuevoMecanico = new Mecanico(nombre, numero);
 
             mecanicos.put(nuevoMecanico.getCodigo(), nuevoMecanico);
-            System.out.println("Mecanico creado con código: " + nuevoMecanico.getCodigo());
+            System.out.println("Mecánico creado con código: " + nuevoMecanico.getCodigo());
 
-            System.out.println("¿Desea introducir otro mecanico? (S/N):");
+            System.out.println("¿Desea introducir otro mecánico? (S/N):");
             continuar = Utilidades.leerChar('S', 'N');
         } while (continuar == 'S');
     }
 
     private static void modificarMecanico(Map<String, Mecanico> mecanicos) throws ElementoNoEncontradoException {
-        System.out.println("\n===== MODIFICAR MECANICO =====");
-        System.out.println("Introduce el Codigo de mecanico a modificar:");
+        System.out.println("\n===== MODIFICAR MECÁNICO =====");
+        System.out.println("Introduce el Código de mecánico a modificar:");
         String codigo = Utilidades.introducirCadena();
 
         if (!mecanicos.containsKey(codigo)) {
-            throw new ElementoNoEncontradoException("No existe ningún mecanico con el código " + codigo);
+            throw new ElementoNoEncontradoException("No existe ningún mecánico con el código " + codigo);
         }
 
         Mecanico mecanico = mecanicos.get(codigo);
-        System.out.println("Datos actuales del mecanico: " + mecanico);
+        System.out.println("Datos actuales del mecánico: " + mecanico);
 
-        System.out.println("Introduce el nuevo Nombre del Mecanico:");
+        System.out.println("Introduce el nuevo Nombre del Mecánico:");
         String nuevoNombre = Utilidades.introducirCadena();
 
         mecanico.setNombre(nuevoNombre);
-        System.out.println("Mecanico modificado correctamente.");
+        System.out.println("Mecánico modificado correctamente.");
     }
 
     private static void eliminarMecanico(Map<String, Mecanico> mecanicos)
             throws ElementoNoEncontradoException, OperacionCanceladaException {
-        System.out.println("\n===== ELIMINAR MECANICO =====");
-        System.out.println("Introduce el Codigo de mecanico a eliminar:");
+        System.out.println("\n===== ELIMINAR MECÁNICO =====");
+        System.out.println("Introduce el Código de mecánico a eliminar:");
         String codigo = Utilidades.introducirCadena();
 
         if (!mecanicos.containsKey(codigo)) {
-            throw new ElementoNoEncontradoException("No existe ningún mecanico con el código " + codigo);
+            throw new ElementoNoEncontradoException("No existe ningún mecánico con el código " + codigo);
         }
 
         System.out.println(
@@ -119,13 +118,13 @@ public class GestionMecanicos {
         }
 
         mecanicos.remove(codigo);
-        System.out.println("Mecanico eliminado correctamente.");
+        System.out.println("Mecánico eliminado correctamente.");
     }
 
     private static void mostrarMecanicos(Map<String, Mecanico> mecanicos) throws ElementoNoEncontradoException {
-        System.out.println("\n===== LISTA DE MECANICOS =====");
+        System.out.println("\n===== LISTA DE MECÁNICOS =====");
         if (mecanicos.isEmpty()) {
-            throw new ElementoNoEncontradoException("No hay mecanicos registrados.");
+            throw new ElementoNoEncontradoException("No hay mecánicos registrados.");
         }
         for (Mecanico mecanico : mecanicos.values()) {
             mecanico.visualizar();
@@ -166,18 +165,18 @@ public class GestionMecanicos {
     }
 
     private static void verInformacionMecanico(Map<String, Mecanico> mecanicos) throws ElementoNoEncontradoException {
-        System.out.println("\n===== VER INFORMACIÓN DE MECANICO =====");
-        System.out.println("Introduce el Codigo de mecanico:");
+        System.out.println("\n===== VER INFORMACIÓN DE MECÁNICO =====");
+        System.out.println("Introduce el Código de mecánico:");
         String codigo = Utilidades.introducirCadena();
 
         if (!mecanicos.containsKey(codigo)) {
-            throw new ElementoNoEncontradoException("No existe ningún mecanico con el código " + codigo);
+            throw new ElementoNoEncontradoException("No existe ningún mecánico con el código " + codigo);
         }
 
         Mecanico mecanico = mecanicos.get(codigo);
         mecanico.visualizar();
 
-        System.out.println("¿Desea agregar el mecanico a una escudería? (S/N):");
+        System.out.println("¿Desea agregar el mecánico a una escudería? (S/N):");
         if (Utilidades.leerChar('S', 'N') == 'S') {
             File ficheroEscuderias = new File("escuderias.dat");
             ArrayList<Escuderia> escuderias = new ArrayList<>();

@@ -36,7 +36,7 @@ public class GestionCircuitos {
 				mostrarCircuitos(aCircuitos);
 				break;
 			case 0:
-				System.out.println("Volviendo al Menu Principal...");
+				System.out.println("Volviendo al Menú Principal...");
 				break;
 			}
 			//GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
@@ -45,7 +45,7 @@ public class GestionCircuitos {
 	}
 	
 	public static int menu() {
-		System.out.println("\n===== Gestión de Circuitos ====="
+		System.out.println("\n===== GESTIÓN DE CIRCUITOS ====="
 				 + "\n1.- Añadir circuitos."
 				 + "\n2.- Modificar circuitos."
 				 + "\n3.- Eliminar circuitos."
@@ -79,6 +79,7 @@ public class GestionCircuitos {
 		int numeroVueltas, longitud;
 		
 		do {
+			System.out.println("\n===== CREACIÓN DE CIRCUITO =====");
 			System.out.println("Introduce el nombre del circuito: ");
 			nombreCarrera=Utilidades.introducirCadena();
 			while(nombreCarrera.length() < 3) {
@@ -151,6 +152,7 @@ public class GestionCircuitos {
 		int posicion;
 		boolean correcto=false;
 		
+		System.out.println("\n===== MODIFICAR CIRCUITO =====");
 		System.out.println("Introduce el nombre del circuito");
 		nombreCarrera = Utilidades.introducirCadena();
 		posicion = buscarNombre(aCircuitos, nombreCarrera);
@@ -169,9 +171,9 @@ public class GestionCircuitos {
 			}
 			aCircuitos.get(posicion).setNombreCircuito(nNombre);
 			aCircuitos.get(posicion).setCodigoCircuito(nNombre.substring(0,3).toUpperCase() + "-" + aCircuitos.get(posicion).getCodigoCircuito().substring(4));
-			System.out.println("Introduce el nuevo nombre." + " (Nº de vueltas actuales: " + aCircuitos.get(posicion).getNumeroVuletas() + ")");
+			System.out.println("Introduce el nuevo número de vueltas." + " (Nº de vueltas actuales: " + aCircuitos.get(posicion).getNumeroVuletas() + ")");
 			aCircuitos.get(posicion).setNumeroVuletas(Utilidades.leerInt(0,Integer.MAX_VALUE));
-			System.out.println("Introduce el nuevo nombre." + " (Longitud actual: " + aCircuitos.get(posicion).getLongitudCircuito() + ")");
+			System.out.println("Introduce la nueva longitud." + " (Longitud actual: " + aCircuitos.get(posicion).getLongitudCircuito() + ")");
 			aCircuitos.get(posicion).setLongitudCircuito(Utilidades.leerInt(0,Integer.MAX_VALUE));
 			System.out.println("Cambios realizados correctamente.");
 		}else {
@@ -183,6 +185,7 @@ public class GestionCircuitos {
 		String nombreCarrera;
 		int posicion;
 		
+		System.out.println("\n===== ELIMINAR CIRCUITO =====");
 		System.out.println("Introduce el nombre del circuito");
 		nombreCarrera = Utilidades.introducirCadena();
 		posicion = buscarNombre(aCircuitos, nombreCarrera);
@@ -190,12 +193,13 @@ public class GestionCircuitos {
 			aCircuitos.remove(posicion);
 			System.out.println("Circuito eliminado correctamente.");
 		}else {
-			System.out.println("El nombre de circuito no esta registrada.");
+			System.out.println("El nombre de circuito no esta registrado.");
 		}
 	}
 
 	public static void mostrarCircuitos(ArrayList<Circuito> aCircuitos) {
 		if(!aCircuitos.isEmpty()) {
+			System.out.println("\n===== LISTA DE CIRCUITOS =====");
 			for(Circuito c : aCircuitos) {
 				System.out.println("\n" + c);
 			}

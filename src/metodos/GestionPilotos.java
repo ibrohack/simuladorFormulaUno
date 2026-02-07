@@ -57,9 +57,8 @@ public class GestionPilotos {
 		System.out.println("1.- Introducir un nuevo Piloto");
 		System.out.println("2.- Modificar Piloto");
 		System.out.println("3.- Eliminar Piloto");
-		System.out.println("4.- Mostrar pilotos");
+		System.out.println("4.- Mostrar Pilotos");
 		System.out.println("5.- Ver información de Piloto y Asignar a Escudería");
-
 		System.out.println("0.- Salir");
 		return Utilidades.leerInt("Seleccione una opción: ", 0, 5);
 	}
@@ -84,7 +83,7 @@ public class GestionPilotos {
 
 	private static void modificarPiloto(Map<String, Piloto> pilotos) throws ElementoNoEncontradoException {
 		System.out.println("\n===== MODIFICAR PILOTO =====");
-		System.out.println("Introduce el Codigo de piloto a modificar:");
+		System.out.println("Introduce el Código de piloto a modificar:");
 		String codigo = Utilidades.introducirCadena();
 
 		if (!pilotos.containsKey(codigo)) {
@@ -104,7 +103,7 @@ public class GestionPilotos {
 	private static void eliminarPiloto(Map<String, Piloto> pilotos)
 			throws ElementoNoEncontradoException, OperacionCanceladaException {
 		System.out.println("\n===== ELIMINAR PILOTO =====");
-		System.out.println("Introduce el Codigo de piloto a eliminar:");
+		System.out.println("Introduce el Código de piloto a eliminar:");
 		String codigo = Utilidades.introducirCadena();
 
 		if (!pilotos.containsKey(codigo)) {
@@ -157,7 +156,7 @@ public class GestionPilotos {
 
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(archivo))) {
 			oos.writeObject(pilotos);
-			System.out.println("Datos guardados correctamente en " + RUTA_FICHERO);
+			System.out.println("Datos guardados correctamente en " + RUTA_FICHERO + ".");
 		} catch (IOException e) {
 			System.out.println("Error al guardar datos: " + e.getMessage());
 		}
@@ -165,11 +164,11 @@ public class GestionPilotos {
 
 	private static void verInformacionPiloto(Map<String, Piloto> pilotos) throws ElementoNoEncontradoException {
 		System.out.println("\n===== VER INFORMACIÓN DE PILOTO =====");
-		System.out.println("Introduce el Codigo de piloto:");
+		System.out.println("Introduce el Código de piloto:");
 		String codigo = Utilidades.introducirCadena();
 
 		if (!pilotos.containsKey(codigo)) {
-			throw new ElementoNoEncontradoException("No existe ningún piloto con el código " + codigo);
+			throw new ElementoNoEncontradoException("No existe ningún piloto con el código " + codigo + ".");
 		}
 
 		Piloto piloto = pilotos.get(codigo);
@@ -188,7 +187,7 @@ public class GestionPilotos {
 				for (int j = 0; j < pilotosArr.length && !alreadyAssigned; j++) {
 					if (pilotosArr[j] != null && pilotosArr[j].getCodigo().equals(piloto.getCodigo())) {
 						System.out
-								.println("Error: El piloto ya pertenece a la escudería " + e.getNombreEscuderia());
+								.println("Error: El piloto ya pertenece a la escudería " + e.getNombreEscuderia() + ".");
 						alreadyAssigned = true;
 					}
 				}
@@ -219,7 +218,7 @@ public class GestionPilotos {
 							piloto.setEscuderia(escuderiaSeleccionada);
 							asignado = true;
 							System.out.println("Piloto añadido correctamente a la escudería "
-									+ escuderiaSeleccionada.getNombreEscuderia());
+									+ escuderiaSeleccionada.getNombreEscuderia() + ".");
 						}
 					}
 

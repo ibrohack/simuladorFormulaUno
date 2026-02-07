@@ -44,18 +44,18 @@ public class GestionEscuderia {
 			case 0:
 				//GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
 				guardarEscuderia(fichEscuderia, aEscuderia);
-				System.out.println("Volviendo al Menu Principal...");
+				System.out.println("Volviendo al Menú Principal...");
 				break;
 			}
 		}while(opciones != 0);
 	}
 
 	public static int menu() {
-		System.out.println("\n===== Gestión de Escuderias ====="
-				+ "\n1.- Añadir escuderias."
-				+ "\n2.- Modificar escuderias."
-				+ "\n3.- Eliminar escuderias."
-				+ "\n4.- Mostrar escuderias."
+		System.out.println("\n=====	GESTIÓN DE ESCUDERÍAS ====="
+				+ "\n1.- Añadir escuderías."
+				+ "\n2.- Modificar escuderías."
+				+ "\n3.- Eliminar escuderías."
+				+ "\n4.- Mostrar escuderías."
 				+ "\n5.- Gestionar Pilotos"
 				+ "\n6.- Gestionar Mecanicos"
 				+ "\n0.- Salir.");
@@ -79,10 +79,11 @@ public class GestionEscuderia {
 		String nombreEscuderia, codigo, continuar;
 
 		do {
-			System.out.println("Introduce el nombre de la escuderia: ");
+			System.out.println("\n===== CREACIÓN DE ESCUDERÍA =====");
+			System.out.println("Introduce el nombre de la escudería: ");
 			nombreEscuderia=Utilidades.introducirCadena();
 			while(nombreEscuderia.length() < 5) {
-				System.out.println("El nombre de la escuderia debe contener mínimo 5 carácteres. Introduce otro nombre.");
+				System.out.println("El nombre de la escudería debe contener mínimo 5 carácteres. Introduce otro nombre.");
 				nombreEscuderia = Utilidades.introducirCadena();
 			}
 			if(buscarNombre(aEscuderia, nombreEscuderia)==-1) {
@@ -90,12 +91,12 @@ public class GestionEscuderia {
 
 				Escuderia e = new Escuderia(codigo, nombreEscuderia);
 				aEscuderia.add(e);
-				System.out.println("Escuderia añadida correctamente.");
+				System.out.println("Escudería añadida correctamente.");
 			}
 			else {
-				System.out.println("El nombre de la escuderia ya existe.");
+				System.out.println("El nombre de la escudería ya existe.");
 			}
-			System.out.println("\n¿Quiéres añadir más circuitos?");
+			System.out.println("\n¿Quiéres añadir más escuderías?");
 			continuar = Utilidades.introducirCadena("SI","NO");
 		}while(continuar.equalsIgnoreCase("SI"));
 	}
@@ -143,7 +144,8 @@ public class GestionEscuderia {
 		int posicion;
 		boolean correcto=false;
 
-		System.out.println("Introduce el nombre de la escuderia: ");
+		System.out.println("\n===== MODIFICAR ESCUDERÍA =====");
+		System.out.println("Introduce el nombre de la escudería: ");
 		nombreEscuderia = Utilidades.introducirCadena();
 		posicion = buscarNombre(aEscuderia, nombreEscuderia);
 		if(posicion != -1) {
@@ -152,10 +154,10 @@ public class GestionEscuderia {
 				correcto=true;
 				nNombre=Utilidades.introducirCadena();
 				if(nNombre.length() < 5) {
-					System.out.println("El nombre de la escuderia debe contener mínimo 5 carácteres. Introduce otro nombre.");
+					System.out.println("El nombre de la escudería debe contener mínimo 5 carácteres. Introduce otro nombre.");
 					correcto=false;
 				}else if(buscarNombre(aEscuderia, nNombre) != -1) {
-					System.out.println("El nombre de la escuderia ya está registrado. Introduce otro nombre.");
+					System.out.println("El nombre de la escudería ya está registrado. Introduce otro nombre.");
 					correcto=false;
 				}
 			}
@@ -163,7 +165,7 @@ public class GestionEscuderia {
 			aEscuderia.get(posicion).setCodigoEscuderia(nNombre.substring(0,5).toUpperCase() + "-" + aEscuderia.get(posicion).getCodigoEscuderia().substring(6));
 			System.out.println("Cambios realizados correctamente.");
 		}else {
-			System.out.println("El nombre de la escuderia no esta registrada.");
+			System.out.println("El nombre de la escudería no esta registrada.");
 		}
 	}
 
@@ -171,24 +173,26 @@ public class GestionEscuderia {
 		String nombreEscuderia;
 		int posicion;
 
-		System.out.println("Introduce el nombre del circuito");
+		System.out.println("\n===== ELIMINAR ESCUDERÍA =====");
+		System.out.println("Introduce el nombre de la escudería: ");
 		nombreEscuderia = Utilidades.introducirCadena();
 		posicion = buscarNombre(aEscuderia, nombreEscuderia);
 		if(posicion != -1) {
 			aEscuderia.remove(posicion);
-			System.out.println("Escuderia eliminada correctamente.");
+			System.out.println("Escudería eliminada correctamente.");
 		}else {
-			System.out.println("El nombre de la escuderia no esta registrada.");
+			System.out.println("El nombre de la escudería no esta registrada.");
 		}
 	}
 
 	public static void mostrarEscuderia(ArrayList<Escuderia> aEscuderia) {
 		if(!aEscuderia.isEmpty()) {
+			System.out.println("\n===== LISTA DE ESCUDERÍAS =====");
 			for(Escuderia e : aEscuderia) {
 				System.out.println("\n" + e);
 			}
 		}else {
-			System.out.println("No hay circuitos registrados.");
+			System.out.println("No hay escuderías registrados.");
 		}
 	}
 }
