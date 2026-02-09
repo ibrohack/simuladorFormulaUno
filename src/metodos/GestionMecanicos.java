@@ -43,7 +43,7 @@ public class GestionMecanicos {
                         verInformacionMecanico(mecanicos);
                         break;
                     case 0:
-                        System.out.println("Fin del programa.");
+                        System.out.println("Volviendo al Menú anterior...");
                         break;
                 }
             } catch (ElementoNoEncontradoException e) {

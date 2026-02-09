@@ -41,6 +41,7 @@ public class GestionPilotos {
 						verInformacionPiloto(pilotos);
 						break;
 					case 0:
+						System.out.println("Volviendo al Menú anterior...");
 						break;
 				}
 			} catch (ElementoNoEncontradoException e) {
