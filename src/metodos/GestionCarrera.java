@@ -21,11 +21,13 @@ public class GestionCarrera {
 		ArrayList <String> pilotosFuera = new ArrayList <String>();
 		HashMap<String, Piloto> pilotos = new HashMap<String, Piloto>();
 		Circuito circuito = elegirCircuito(fichCircuito);
-		carrera.setCircuitoCarrera(circuito);
-		carrera.setCodigoCarrera();
+		if(circuito!=null) {
+			carrera.setCircuitoCarrera(circuito);
+			carrera.setCodigoCarrera();
+		}
 		pilotos = cargarPilotos(pilotos, fichPilotos);
 
-		if(fichCircuito.exists() && fichPilotos.exists()) {
+		if(!pilotos.isEmpty() || circuito!=null) {
 			for(int i=0; i<=circuito.getNumeroVuletas(); i++) {
 				if(i==0) {
 					for(Piloto piloto: pilotos.values()) {
@@ -108,14 +110,14 @@ public class GestionCarrera {
 							}
 						}
 					}
-
 				}
+
 			}
 			actualizarPilotos(fichPilotos, pilotos);
 			escribirGanador(fichPilotos, carrera, fichMarcador, pilotosFuera);
 			System.out.println("Carrera finalizada.");
 		}else {
-			System.out.println("No hay pilotos o circuitos.");
+			System.out.println("No hay pilotos.");
 		}
 	}
 
@@ -176,25 +178,28 @@ public class GestionCarrera {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			do {
-				System.out.println("\n---- SELECCIÓN DE CIRCUITOS -----");
-				for(Circuito cr: circuitos) {
-					System.out.println(String.format("Circuito %s número de vueltas %d", cr.getNombreCircuito(), cr.getNumeroVuletas()));
-				}
-				nombreCircuito = Utilidades.introducirCadena();
-				for(int i=0; i<circuitos.size() && !encontrado; i++) {
-					if(circuitos.get(i).getNombreCircuito().equalsIgnoreCase(nombreCircuito)) {
-						circuito = circuitos.get(i);
-						encontrado=true;
+			if(!circuitos.isEmpty()) {
+				do {
+					System.out.println("\n---- SELECCIÓN DE CIRCUITOS -----");
+					for(Circuito cr: circuitos) {
+						System.out.println(String.format("Circuito %s número de vueltas %d", cr.getNombreCircuito(), cr.getNumeroVuletas()));
 					}
-				}
-				if(!encontrado) {
-					System.out.println("No existe ese circuito.");
-				}
+					nombreCircuito = Utilidades.introducirCadena();
+					for(int i=0; i<circuitos.size() && !encontrado; i++) {
+						if(circuitos.get(i).getNombreCircuito().equalsIgnoreCase(nombreCircuito)) {
+							circuito = circuitos.get(i);
+							encontrado=true;
+						}
+					}
+					if(!encontrado) {
+						System.out.println("No existe ese circuito.");
+					}
 
-			}while(!encontrado);
-		}else {
-			System.out.println("No hay circuitos.");
+				}while(!encontrado);
+
+			}else {
+				System.out.println("No hay circuitos.");
+			}
 		}
 		return circuito;
 	}
