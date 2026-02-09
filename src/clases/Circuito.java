@@ -54,7 +54,9 @@ public class Circuito implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Circuito [codigoCircuito=" + codigoCircuito + ", nombreCircuito=" + nombreCircuito + ", numeroVuletas="
-				+ numeroVueltas + ", longitudCircuito=" + longitudCircuito + "]";
+		return "Circuito: " + nombreCircuito
+				+ "\nCódigo: " + codigoCircuito
+				+ "\nNº de vueltas: " + numeroVueltas
+				+ "\nDistancia: " + longitudCircuito + "km";
 	}
 }

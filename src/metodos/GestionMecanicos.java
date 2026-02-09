@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Map;
 
+import clases.Persona;
 import clases.Mecanico;
 import clases.Escuderia;
 import excepciones.ElementoNoEncontradoException;
@@ -18,7 +19,7 @@ public class GestionMecanicos {
     private static final String RUTA_FICHERO = "mecanicos.dat";
 
     public static void GestionarMecanicos() {
-        Map<String, Mecanico> mecanicos = CargarDatos.cargarMecanicos(RUTA_FICHERO);
+        Map<String, Persona> mecanicos = CargarDatos.cargarMecanicos(RUTA_FICHERO);
 
         int opcion;
         do {
@@ -42,7 +43,7 @@ public class GestionMecanicos {
                         verInformacionMecanico(mecanicos);
                         break;
                     case 0:
-                        System.out.println("Fin del programa.");
+                        System.out.println("Volviendo al Menú anterior...");
                         break;
                 }
             } catch (ElementoNoEncontradoException e) {
@@ -64,7 +65,7 @@ public class GestionMecanicos {
         System.out.println("0.- Salir");
     }
 
-    private static void introducirMecanico(Map<String, Mecanico> mecanicos) {
+    private static void introducirMecanico(Map<String, Persona> mecanicos) {
         char continuar;
         do {
             System.out.println("\n===== ALTA DE MECÁNICO =====");
@@ -82,7 +83,7 @@ public class GestionMecanicos {
         } while (continuar == 'S');
     }
 
-    private static void modificarMecanico(Map<String, Mecanico> mecanicos) throws ElementoNoEncontradoException {
+    private static void modificarMecanico(Map<String, Persona> mecanicos) throws ElementoNoEncontradoException {
         System.out.println("\n===== MODIFICAR MECÁNICO =====");
         System.out.println("Introduce el Código de mecánico a modificar:");
         String codigo = Utilidades.introducirCadena();
@@ -91,7 +92,7 @@ public class GestionMecanicos {
             throw new ElementoNoEncontradoException("No existe ningún mecánico con el código " + codigo);
         }
 
-        Mecanico mecanico = mecanicos.get(codigo);
+        Mecanico mecanico = (Mecanico) mecanicos.get(codigo);
         System.out.println("Datos actuales del mecánico: " + mecanico);
 
         System.out.println("Introduce el nuevo Nombre del Mecánico:");
@@ -101,7 +102,7 @@ public class GestionMecanicos {
         System.out.println("Mecánico modificado correctamente.");
     }
 
-    private static void eliminarMecanico(Map<String, Mecanico> mecanicos)
+    private static void eliminarMecanico(Map<String, Persona> mecanicos)
             throws ElementoNoEncontradoException, OperacionCanceladaException {
         System.out.println("\n===== ELIMINAR MECÁNICO =====");
         System.out.println("Introduce el Código de mecánico a eliminar:");
@@ -121,19 +122,19 @@ public class GestionMecanicos {
         System.out.println("Mecánico eliminado correctamente.");
     }
 
-    private static void mostrarMecanicos(Map<String, Mecanico> mecanicos) throws ElementoNoEncontradoException {
+    private static void mostrarMecanicos(Map<String, Persona> mecanicos) throws ElementoNoEncontradoException {
         System.out.println("\n===== LISTA DE MECÁNICOS =====");
         if (mecanicos.isEmpty()) {
             throw new ElementoNoEncontradoException("No hay mecánicos registrados.");
         }
-        for (Mecanico mecanico : mecanicos.values()) {
+        for (Persona mecanico : mecanicos.values()) {
             mecanico.visualizar();
         }
     }
 
-    private static int calcularSiguienteNumero(Map<String, Mecanico> mecanicos) {
+    private static int calcularSiguienteNumero(Map<String, Persona> mecanicos) {
         int max = 0;
-        for (Mecanico m : mecanicos.values()) {
+        for (Persona m : mecanicos.values()) {
             String codigo = m.getCodigo();
             if (codigo.length() > 3) {
                 try {
@@ -149,7 +150,7 @@ public class GestionMecanicos {
         return max + 1;
     }
 
-    private static void guardarDatos(Map<String, Mecanico> mecanicos) {
+    private static void guardarDatos(Map<String, Persona> mecanicos) {
         File archivo = new File(RUTA_FICHERO);
 
         if (archivo.getParentFile() != null) {
@@ -164,7 +165,7 @@ public class GestionMecanicos {
         }
     }
 
-    private static void verInformacionMecanico(Map<String, Mecanico> mecanicos) throws ElementoNoEncontradoException {
+    private static void verInformacionMecanico(Map<String, Persona> mecanicos) throws ElementoNoEncontradoException {
         System.out.println("\n===== VER INFORMACIÓN DE MECÁNICO =====");
         System.out.println("Introduce el Código de mecánico:");
         String codigo = Utilidades.introducirCadena();
@@ -173,7 +174,7 @@ public class GestionMecanicos {
             throw new ElementoNoEncontradoException("No existe ningún mecánico con el código " + codigo);
         }
 
-        Mecanico mecanico = mecanicos.get(codigo);
+        Mecanico mecanico = (Mecanico) mecanicos.get(codigo);
         mecanico.visualizar();
 
         System.out.println("¿Desea agregar el mecánico a una escudería? (S/N):");

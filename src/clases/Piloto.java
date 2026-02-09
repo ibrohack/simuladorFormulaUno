@@ -40,7 +40,7 @@ public class Piloto extends Persona {
 
 	@Override
 	public void visualizar() {
-		System.out.println("Piloto: " + this.nombre);
+		System.out.println("\nPiloto: " + this.nombre);
 		System.out.println("Codigo: " + this.codigo);
 		if (this.escuderia != null) {
 			System.out.println("Escuderia: " + this.escuderia.getNombreEscuderia());

@@ -1,7 +1,6 @@
 package clases;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 public class Escuderia implements Serializable{
 	/**
@@ -62,7 +61,14 @@ public class Escuderia implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Escuderia [piloto=" + Arrays.toString(piloto) + ", mecanico=" + mecanico + ", codigo=" + codigoEscuderia
-				+ ", nombre=" + nombreEscuderia + "]";
+		String mensaje="Escudería: " + nombreEscuderia
+				+ "\nCódigo: " + codigoEscuderia
+				+ "\nJefe mecánico: " + this.mecanico.getNombre();
+		if(piloto != null) {
+			mensaje.concat("\nPilotos: " + piloto);
+		}else {
+			mensaje.concat("\nPilotos: Sin asignar");
+		}
+		return mensaje;
 	}
 }
