@@ -16,17 +16,19 @@ public class Main {
 	public static int menu() {
 		System.out.println("\n===== MENU ====="
 				+ "\n1.- Gestionar Escuderia"
-				+ "\n2.- Gestionar Circuitos"
-				+ "\n3.- Iniciar Carrera"
-				+ "\n4.- Mostrar marcador"
+				+ "\n2.- Gestionar Pilotos"
+				+ "\n3.- Gestionar Mecanicos"
+				+ "\n4.- Gestionar Circuitos"
+				+ "\n5.- Iniciar Carrera"
+				+ "\n6.- Mostrar marcador"
 				+ "\n0.- Salir");
-		return Utilidades.leerInt(0, 4);
+		return Utilidades.leerInt(0, 6);
 	}
 
 	public static void main(String[] args) {
 		fillData();
 		File fichCircuitos = new File("circuitos.dat");
-		File fichEscuderia = new File("escuderia.dat");
+		File fichEscuderia = new File("escuderias.dat");
 		File fichPilotos = new File("pilotos.dat");
 		File fichMarcador = new File("marcador.txt");
 		int opcion = 0;
@@ -38,12 +40,18 @@ public class Main {
 					GestionEscuderia.menuEscuderia(fichEscuderia);
 					break;
 				case 2:
-					GestionCircuitos.menuCircuitos(fichCircuitos);
+					GestionPilotos.GestionarPilotos();
 					break;
 				case 3:
-					GestionCarrera.simulacionCarrera(fichCircuitos, fichPilotos, fichMarcador);
+					GestionMecanicos.GestionarMecanicos();
 					break;
 				case 4:
+					GestionCircuitos.menuCircuitos(fichCircuitos);
+					break;
+				case 5:
+					GestionCarrera.simulacionCarrera(fichCircuitos, fichPilotos, fichMarcador);
+					break;
+				case 6:
 					LecturaMarcador.leerMarcador(fichMarcador);
 					break;
 				case 0:
@@ -56,7 +64,7 @@ public class Main {
 
 	public static void fillData() {
 		File fichCircuitos = new File("circuitos.dat");
-		File fichEscuderia = new File("escuderia.dat");
+		File fichEscuderia = new File("escuderias.dat");
 		File fichPilotos = new File("pilotos.dat");
 		File fichMecanicos = new File("mecanicos.dat");
 
@@ -78,21 +86,21 @@ public class Main {
 
 			// Red Bull Racing
 			Piloto p1 = new Piloto("Max Verstappen", 1);
-		//	Piloto p2 = new Piloto("Sergio Perez", 11);
-			Mecanico m1 = new Mecanico("Lee Stevenson", 101);
-			Escuderia rb = new Escuderia(new Piloto[] { p1 }, m1, "001", "Red Bull Racing");
+			Piloto p2 = new Piloto("Sergio Perez", 2);
+			Mecanico m1 = new Mecanico("Lee Stevenson", 1);
+			Escuderia rb = new Escuderia(new Piloto[] { p1, p2 }, m1, "001", "Red Bull Racing");
 			p1.setEscuderia(rb);
-	//		p2.setEscuderia(rb);
+			p2.setEscuderia(rb);
 			escuderias.add(rb);
 			todosLosPilotos.put(p1.getCodigo(), p1);
-	//		todosLosPilotos.put(p2.getCodigo(), p2);
+			todosLosPilotos.put(p2.getCodigo(), p2);
 			todosLosMecanicos.put(m1.getCodigo(), m1);
 
 			// Ferrari
-	/*		Piloto p3 = new Piloto("Charles Leclerc", 16);
-			Piloto p4 = new Piloto("Carlos Sainz", 55);
-			Mecanico m2 = new Mecanico("Diego Ioverno", 102);
-			Escuderia fer = new Escuderia(new Piloto[] { p3, p4 }, m2, "FER", "Ferrari");
+			Piloto p3 = new Piloto("Charles Leclerc", 3);
+			Piloto p4 = new Piloto("Carlos Sainz", 4);
+			Mecanico m2 = new Mecanico("Diego Ioverno", 2);
+			Escuderia fer = new Escuderia(new Piloto[] { p3, p4 }, m2, "002", "Ferrari");
 			p3.setEscuderia(fer);
 			p4.setEscuderia(fer);
 			escuderias.add(fer);
@@ -101,10 +109,10 @@ public class Main {
 			todosLosMecanicos.put(m2.getCodigo(), m2);
 
 			// Mercedes
-			Piloto p5 = new Piloto("Lewis Hamilton", 44);
-			Piloto p6 = new Piloto("George Russell", 63);
-			Mecanico m3 = new Mecanico("Ron Meadows", 103);
-			Escuderia mer = new Escuderia(new Piloto[] { p5, p6 }, m3, "MER", "Mercedes");
+			Piloto p5 = new Piloto("Lewis Hamilton", 5);
+			Piloto p6 = new Piloto("George Russell", 6);
+			Mecanico m3 = new Mecanico("Ron Meadows", 3);
+			Escuderia mer = new Escuderia(new Piloto[] { p5, p6 }, m3, "003", "Mercedes");
 			p5.setEscuderia(mer);
 			p6.setEscuderia(mer);
 			escuderias.add(mer);
@@ -113,10 +121,10 @@ public class Main {
 			todosLosMecanicos.put(m3.getCodigo(), m3);
 
 			// McLaren
-			Piloto p7 = new Piloto("Lando Norris", 4);
-			Piloto p8 = new Piloto("Oscar Piastri", 81);
-			Mecanico m4 = new Mecanico("Andrea Stella", 104);
-			Escuderia mcl = new Escuderia(new Piloto[] { p7, p8 }, m4, "MCL", "McLaren");
+			Piloto p7 = new Piloto("Lando Norris", 7);
+			Piloto p8 = new Piloto("Oscar Piastri", 8);
+			Mecanico m4 = new Mecanico("Andrea Stella", 4);
+			Escuderia mcl = new Escuderia(new Piloto[] { p7, p8 }, m4, "004", "McLaren");
 			p7.setEscuderia(mcl);
 			p8.setEscuderia(mcl);
 			escuderias.add(mcl);
@@ -125,17 +133,17 @@ public class Main {
 			todosLosMecanicos.put(m4.getCodigo(), m4);
 
 			// Aston Martin
-			Piloto p9 = new Piloto("Fernando Alonso", 14);
-			Piloto p10 = new Piloto("Lance Stroll", 18);
-			Mecanico m5 = new Mecanico("Andy Stevenson", 105);
-			Escuderia ast = new Escuderia(new Piloto[] { p9, p10 }, m5, "AST", "Aston Martin");
+			Piloto p9 = new Piloto("Fernando Alonso", 9);
+			Piloto p10 = new Piloto("Lance Stroll", 10);
+			Mecanico m5 = new Mecanico("Andy Stevenson", 5);
+			Escuderia ast = new Escuderia(new Piloto[] { null, null }, null, "005", "Aston Martin");
 			p9.setEscuderia(ast);
 			p10.setEscuderia(ast);
 			escuderias.add(ast);
 			todosLosPilotos.put(p9.getCodigo(), p9);
 			todosLosPilotos.put(p10.getCodigo(), p10);
 			todosLosMecanicos.put(m5.getCodigo(), m5);
-*/
+
 			GestionEscuderia.guardarEscuderia(fichEscuderia, escuderias);
 
 			try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fichPilotos))) {

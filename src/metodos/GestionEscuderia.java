@@ -35,17 +35,11 @@ public class GestionEscuderia {
 				case 4:
 					mostrarEscuderia(aEscuderia);
 					break;
-				case 5:
-					GestionPilotos.GestionarPilotos();
-					break;
-				case 6:
-					GestionMecanicos.GestionarMecanicos();
-					break;
 				case 0:
-					// GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
 					System.out.println("Volviendo al Menú Principal...");
 					break;
 			}
+			// GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
 			guardarEscuderia(fichEscuderia, aEscuderia);
 		} while (opciones != 0);
 	}
@@ -56,10 +50,8 @@ public class GestionEscuderia {
 				+ "\n2.- Modificar escuderías."
 				+ "\n3.- Eliminar escuderías."
 				+ "\n4.- Mostrar escuderías."
-				+ "\n5.- Gestionar Pilotos"
-				+ "\n6.- Gestionar Mecanicos"
 				+ "\n0.- Salir.");
-		return Utilidades.leerInt(0, 6);
+		return Utilidades.leerInt(0, 4);
 	}
 
 	public static void guardarEscuderia(File fichEscuderia, ArrayList<Escuderia> aEscuderia) {
@@ -103,31 +95,19 @@ public class GestionEscuderia {
 
 	public static String crearCodigo(ArrayList<Escuderia> aEscuderia) {
 		String codigo = "001";
-		int nuevoCod = 1, pCodigo;
+		int nuevoCod = 1;
 		boolean fin = false;
 
-		// COMPARAMOS EL CODIGO ACTUAL CON EL QUE SE SUPONE QUE DEBERIA SER
-		// EN CASO DE QUE SEA DISTINTO TERMINAMOS LA EJECUCION Y LO GUARDAMOS
+		// Buscamos el codigo maximo
 		if (!aEscuderia.isEmpty()) {
-			for (int i = 0; i < aEscuderia.size() && !fin; i++) {
-				codigo = aEscuderia.get(i).getCodigoEscuderia().substring(6);
-				/*
-				 * if(pCodigo != nuevoCod) {
-				 * fin = true;
-				 * }
-				 */
-				if (!fin) {
-					nuevoCod = Integer.parseInt(aEscuderia.get(i).getCodigoEscuderia().substring(6)) + 1;
+			for (int i = 0; i < aEscuderia.size(); i++) {
+				if (Integer.parseInt(aEscuderia.get(i).getCodigoEscuderia().substring(6)) > nuevoCod) {
+					nuevoCod = Integer.parseInt(aEscuderia.get(i).getCodigoEscuderia().substring(6));
 				}
 			}
 
-			// PARA QUE EL CODIGO CONTENGA 3 DIGITOS TENEMOS EN CUENTA LA LO LONGITUD DEL
-			// MISMO
-			if (String.valueOf(nuevoCod).length() == 1) {
-				codigo = "00" + String.valueOf(nuevoCod);
-			} else if (String.valueOf(nuevoCod).length() == 2) {
-				codigo = "0" + String.valueOf(nuevoCod);
-			}
+			// Formateamos el codigo
+			codigo = String.format("%03d", nuevoCod + 1);
 		}
 		return codigo;
 	}

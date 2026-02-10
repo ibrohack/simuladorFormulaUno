@@ -179,7 +179,7 @@ public class GestionMecanicos {
 
         System.out.println("¿Desea agregar el mecánico a una escudería? (S/N):");
         if (Utilidades.leerChar('S', 'N') == 'S') {
-            File ficheroEscuderias = new File("escuderia.dat");
+            File ficheroEscuderias = new File("escuderias.dat");
             ArrayList<Escuderia> escuderias = new ArrayList<>();
             escuderias = CargarDatos.cargarEscuderia(ficheroEscuderias);
 
@@ -199,11 +199,13 @@ public class GestionMecanicos {
                 String codigoEscuderia = Utilidades.introducirCadena();
 
                 Escuderia escuderiaSeleccionada = null;
+                int posicionEscuderiaEncontrada = -1;
                 boolean found = false;
                 for (int i = 0; i < escuderias.size() && !found; i++) {
                     Escuderia e = escuderias.get(i);
                     if (e.getCodigoEscuderia().equalsIgnoreCase(codigoEscuderia)) {
                         escuderiaSeleccionada = e;
+                        posicionEscuderiaEncontrada = i;
                         found = true;
                     }
                 }
@@ -222,6 +224,7 @@ public class GestionMecanicos {
 
                     if (overwrite) {
                         escuderiaSeleccionada.setMecanico(mecanico);
+                        escuderias.set(posicionEscuderiaEncontrada, escuderiaSeleccionada);
                         GestionEscuderia.guardarEscuderia(ficheroEscuderias, escuderias);
                         System.out.println("Mecánico asignado correctamente a la escudería "
                                 + escuderiaSeleccionada.getNombreEscuderia());

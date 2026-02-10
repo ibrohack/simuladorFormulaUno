@@ -177,18 +177,19 @@ public class GestionPilotos {
 
 		System.out.println("¿Desea agregar el piloto a una escudería? (S/N):");
 		if (Utilidades.leerChar('S', 'N') == 'S') {
-			File ficheroEscuderias = new File("escuderia.dat");
+			File ficheroEscuderias = new File("escuderias.dat");
 			ArrayList<Escuderia> escuderias = new ArrayList<>();
 			escuderias = CargarDatos.cargarEscuderia(ficheroEscuderias);
-
 			boolean alreadyAssigned = false;
+			int posicionEscuderiaEncontrada = -1;
 			for (int i = 0; i < escuderias.size() && !alreadyAssigned; i++) {
 				Escuderia e = escuderias.get(i);
-				Piloto[] pilotosArr = e.getPiloto();
+				Piloto[] pilotosArr = e.getPilotos();
 				for (int j = 0; j < pilotosArr.length && !alreadyAssigned; j++) {
 					if (pilotosArr[j] != null && pilotosArr[j].getCodigo().equals(piloto.getCodigo())) {
 						System.out
-								.println("Error: El piloto ya pertenece a la escudería " + e.getNombreEscuderia() + ".");
+								.println(
+										"Error: El piloto ya pertenece a la escudería " + e.getNombreEscuderia() + ".");
 						alreadyAssigned = true;
 					}
 				}
@@ -206,17 +207,20 @@ public class GestionPilotos {
 					Escuderia e = escuderias.get(i);
 					if (e.getCodigoEscuderia().equalsIgnoreCase(codigoEscuderia)) {
 						escuderiaSeleccionada = e;
+						posicionEscuderiaEncontrada = i;
 						escuderiaEncontrada = true;
 					}
 				}
 
 				if (escuderiaSeleccionada != null) {
-					Piloto[] pilotosEscuderia = escuderiaSeleccionada.getPiloto();
+					Piloto[] pilotosEscuderia = escuderiaSeleccionada.getPilotos();
 					boolean asignado = false;
 					for (int i = 0; i < pilotosEscuderia.length && !asignado; i++) {
 						if (pilotosEscuderia[i] == null) {
 							pilotosEscuderia[i] = piloto;
 							piloto.setEscuderia(escuderiaSeleccionada);
+							escuderiaSeleccionada.setPilotos(pilotosEscuderia);
+							escuderias.set(posicionEscuderiaEncontrada, escuderiaSeleccionada);
 							asignado = true;
 							System.out.println("Piloto añadido correctamente a la escudería "
 									+ escuderiaSeleccionada.getNombreEscuderia() + ".");
