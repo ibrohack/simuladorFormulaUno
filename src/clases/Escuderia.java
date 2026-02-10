@@ -7,32 +7,32 @@ public class Escuderia implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	Piloto[] piloto;
-	Mecanico mecanico;
-	String codigoEscuderia;
-	String nombreEscuderia;
+	private Piloto[] pilotos;
+	private Mecanico mecanico;
+	private String codigoEscuderia;
+	private String nombreEscuderia;
 	
 	public Escuderia(String codigo, String nombre) {
 		super();
-		this.piloto = new Piloto[2];
+		this.pilotos = new Piloto[2];
 		this.codigoEscuderia = nombre.toUpperCase().substring(0,5) + "-" + codigo;
 		this.nombreEscuderia = nombre;
 	}
 	
 	public Escuderia(Piloto[] piloto, Mecanico mecanico, String codigo, String nombre) {
 		super();
-		this.piloto = piloto;
+		this.pilotos = piloto;
 		this.mecanico = mecanico;
 		this.codigoEscuderia = nombre.toUpperCase().substring(0,5) + "-" + codigo;
 		this.nombreEscuderia = nombre;
 	}
 
 	public Piloto[] getPiloto() {
-		return piloto;
+		return pilotos;
 	}
 
 	public void setPiloto(Piloto[] piloto) {
-		this.piloto = piloto;
+		this.pilotos = piloto;
 	}
 
 	public Mecanico getMecanico() {
@@ -64,8 +64,10 @@ public class Escuderia implements Serializable{
 		String mensaje="Escudería: " + nombreEscuderia
 				+ "\nCódigo: " + codigoEscuderia
 				+ "\nJefe mecánico: " + this.mecanico.getNombre();
-		if(piloto != null) {
-			mensaje.concat("\nPilotos: " + piloto);
+		if(pilotos != null) {
+			for(int i=0;i<pilotos.length;i++) {
+				mensaje=mensaje.concat("\nPiloto: " + pilotos[i].getNombre());
+			}
 		}else {
 			mensaje.concat("\nPilotos: Sin asignar");
 		}
