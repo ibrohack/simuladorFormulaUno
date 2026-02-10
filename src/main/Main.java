@@ -78,18 +78,18 @@ public class Main {
 
 			// Red Bull Racing
 			Piloto p1 = new Piloto("Max Verstappen", 1);
-			Piloto p2 = new Piloto("Sergio Perez", 11);
+		//	Piloto p2 = new Piloto("Sergio Perez", 11);
 			Mecanico m1 = new Mecanico("Lee Stevenson", 101);
-			Escuderia rb = new Escuderia(new Piloto[] { p1, p2 }, m1, "RBR", "Red Bull Racing");
+			Escuderia rb = new Escuderia(new Piloto[] { p1 }, m1, "001", "Red Bull Racing");
 			p1.setEscuderia(rb);
-			p2.setEscuderia(rb);
+	//		p2.setEscuderia(rb);
 			escuderias.add(rb);
 			todosLosPilotos.put(p1.getCodigo(), p1);
-			todosLosPilotos.put(p2.getCodigo(), p2);
+	//		todosLosPilotos.put(p2.getCodigo(), p2);
 			todosLosMecanicos.put(m1.getCodigo(), m1);
 
 			// Ferrari
-			Piloto p3 = new Piloto("Charles Leclerc", 16);
+	/*		Piloto p3 = new Piloto("Charles Leclerc", 16);
 			Piloto p4 = new Piloto("Carlos Sainz", 55);
 			Mecanico m2 = new Mecanico("Diego Ioverno", 102);
 			Escuderia fer = new Escuderia(new Piloto[] { p3, p4 }, m2, "FER", "Ferrari");
@@ -135,7 +135,7 @@ public class Main {
 			todosLosPilotos.put(p9.getCodigo(), p9);
 			todosLosPilotos.put(p10.getCodigo(), p10);
 			todosLosMecanicos.put(m5.getCodigo(), m5);
-
+*/
 			GestionEscuderia.guardarEscuderia(fichEscuderia, escuderias);
 
 			try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fichPilotos))) {

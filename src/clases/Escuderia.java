@@ -62,15 +62,18 @@ public class Escuderia implements Serializable{
 	@Override
 	public String toString() {
 		String mensaje="Escudería: " + nombreEscuderia
-				+ "\nCódigo: " + codigoEscuderia
-				+ "\nJefe mecánico: " + this.mecanico.getNombre();
-		if(pilotos != null) {
-			for(int i=0;i<pilotos.length;i++) {
+				+ "\nCódigo: " + codigoEscuderia;
+		if(mecanico != null) {
+			mensaje=mensaje.concat("\nJefe mecánico: " + this.mecanico.getNombre());
+		}else {
+			mensaje=mensaje.concat("\nMecanico: Sin asignar");
+		}
+		for(int i=0;i<pilotos.length;i++) {
+			if(pilotos[i] != null) {
 				mensaje=mensaje.concat("\nPiloto: " + pilotos[i].getNombre());
 			}
-		}else {
-			mensaje.concat("\nPilotos: Sin asignar");
 		}
+		
 		return mensaje;
 	}
 }

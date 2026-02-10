@@ -179,7 +179,7 @@ public class GestionMecanicos {
 
         System.out.println("¿Desea agregar el mecánico a una escudería? (S/N):");
         if (Utilidades.leerChar('S', 'N') == 'S') {
-            File ficheroEscuderias = new File("escuderias.dat");
+            File ficheroEscuderias = new File("escuderia.dat");
             ArrayList<Escuderia> escuderias = new ArrayList<>();
             escuderias = CargarDatos.cargarEscuderia(ficheroEscuderias);
 

@@ -42,11 +42,11 @@ public class GestionEscuderia {
 				GestionMecanicos.GestionarMecanicos();
 				break;
 			case 0:
-				//GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
-				guardarEscuderia(fichEscuderia, aEscuderia);
 				System.out.println("Volviendo al Menú Principal...");
 				break;
 			}
+			//GUARDAMOS TODOS LOS CAMBIOS REALIZADOS
+			guardarEscuderia(fichEscuderia, aEscuderia);
 		}while(opciones != 0);
 	}
 
@@ -103,16 +103,17 @@ public class GestionEscuderia {
 
 	public static String crearCodigo(ArrayList<Escuderia> aEscuderia) {
 		String codigo = "001";
-		int nuevoCod = 1;
+		int nuevoCod = 1, pCodigo;
 		boolean fin = false;
 
 		//COMPARAMOS EL CODIGO ACTUAL CON EL QUE SE SUPONE QUE DEBERIA SER
 		//EN CASO DE QUE SEA DISTINTO TERMINAMOS LA EJECUCION Y LO GUARDAMOS
 		if(!aEscuderia.isEmpty()) {
 			for(int i=0; i < aEscuderia.size() && !fin; i++) {
-				if(Integer.parseInt(aEscuderia.get(i).getCodigoEscuderia().substring(6)) != nuevoCod) {
+				codigo = aEscuderia.get(i).getCodigoEscuderia().substring(6);
+				/*if(pCodigo != nuevoCod) {
 					fin = true;
-				}
+				}*/
 				if(!fin) {
 					nuevoCod = Integer.parseInt(aEscuderia.get(i).getCodigoEscuderia().substring(6))+1;
 				}
