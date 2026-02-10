@@ -96,7 +96,6 @@ public class GestionEscuderia {
 	public static String crearCodigo(ArrayList<Escuderia> aEscuderia) {
 		String codigo = "001";
 		int nuevoCod = 1;
-		boolean fin = false;
 
 		// Buscamos el codigo maximo
 		if (!aEscuderia.isEmpty()) {
